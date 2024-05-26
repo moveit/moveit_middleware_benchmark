@@ -1,0 +1,10 @@
+repositories:
+  # Keep moveit_* repos here because they are released with moveit
+  moveit_msgs:
+    type: git
+    url: https://github.com/moveit/moveit2.git
+    version: main
+  moveit_resources:
+    type: git
+    url: https://github.com/moveit/moveit2_tutorials.git
+    version: main
