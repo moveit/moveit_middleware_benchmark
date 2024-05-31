@@ -8,10 +8,24 @@ from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
 from moveit_configs_utils import MoveItConfigsBuilder
 from launch_param_builder import ParameterBuilder
+from launch.actions import (
+    DeclareLaunchArgument,
+    EmitEvent,
+    ExecuteProcess,
+    LogInfo,
+    RegisterEventHandler,
+    TimerAction,
+)
+from launch.event_handlers import (
+    OnExecutionComplete,
+    OnProcessExit,
+    OnProcessIO,
+    OnProcessStart,
+    OnShutdown,
+)
 
 
 def generate_launch_description():
-
     # Command-line arguments
     rviz_config_arg = DeclareLaunchArgument(
         "rviz_config",
@@ -156,25 +170,25 @@ def generate_launch_description():
         condition=IfCondition(db_config),
     )
 
-    # test_scenario_perception_pipeline_node = Node(
-    #     name="test_scenario_perception_pipeline_node",
-    #     package="moveit_middleware_benchmark",
-    #     executable="test_scenario_perception_pipeline",
-    #     output="both",
-    #     parameters=[
-    #         moveit_config.robot_description,
-    #         moveit_config.robot_description_semantic,
-    #         moveit_config.robot_description_kinematics,
-    #         {"use_sim_time": True}
-    #     ],
-    # )
+    test_scenario_perception_pipeline_node = Node(
+        name="test_scenario_perception_pipeline_node",
+        package="moveit_middleware_benchmark",
+        executable="test_scenario_perception_pipeline",
+        output="both",
+        parameters=[
+            moveit_config.robot_description,
+            moveit_config.robot_description_semantic,
+            moveit_config.robot_description_kinematics,
+            {"use_sim_time": True},
+        ],
+    )
 
     return LaunchDescription(
         [
-            rviz_config_arg,
+            # rviz_config_arg,
             db_arg,
             ros2_control_hardware_type,
-            rviz_node,
+            # rviz_node,
             static_tf_node,
             robot_state_publisher,
             move_group_node,
@@ -183,6 +197,15 @@ def generate_launch_description():
             panda_arm_controller_spawner,
             panda_hand_controller_spawner,
             mongodb_server_node,
-            # test_scenario_perception_pipeline_node,
+            # for https://github.com/ros-controls/ros2_controllers/issues/981
+            RegisterEventHandler(
+                OnProcessStart(
+                    target_action=panda_arm_controller_spawner,
+                    on_start=[
+                        LogInfo(msg="Started panda_arm_controller_spawner"),
+                        test_scenario_perception_pipeline_node,
+                    ],
+                )
+            ),
         ]
     )

@@ -13,86 +13,145 @@ using moveit::planning_interface::MoveGroupInterface;
 // class MoveGroupServer {
 // };
 
-class ScenarioPerceptionPipeline {
+class ScenarioPerceptionPipeline
+{
 public:
-    ScenarioPerceptionPipeline(std::shared_ptr<MoveGroupInterface>);
-    bool go_to_poses(std::vector<geometry_msgs::msg::Pose> pose_list);
+  ScenarioPerceptionPipeline(std::shared_ptr<MoveGroupInterface>);
+  std::tuple<int, int> run_test_case(std::vector<geometry_msgs::msg::Pose> pose_list);
+  bool send_target_pose(geometry_msgs::msg::Pose target_pose);
+
 private:
-    std::shared_ptr<MoveGroupInterface> move_group_interface_ptr_;
+  std::shared_ptr<MoveGroupInterface> move_group_interface_ptr_;
 };
 
-ScenarioPerceptionPipeline::ScenarioPerceptionPipeline(std::shared_ptr<MoveGroupInterface> move_group_interface_ptr) 
-: move_group_interface_ptr_(move_group_interface_ptr) { }
+ScenarioPerceptionPipeline::ScenarioPerceptionPipeline(std::shared_ptr<MoveGroupInterface> move_group_interface_ptr)
+  : move_group_interface_ptr_(move_group_interface_ptr)
+{
+}
 
-bool ScenarioPerceptionPipeline::go_to_poses(std::vector<geometry_msgs::msg::Pose> pose_list) {
-    for (auto& pose : pose_list) {
-        move_group_interface_ptr_->setPoseTarget(pose);
+std::tuple<int, int> ScenarioPerceptionPipeline::run_test_case(std::vector<geometry_msgs::msg::Pose> test_case)
+{
+  int success_number = 0;
+  int failure_number = 0;
+  for (auto& pose : test_case)
+  {
+    bool is_successful = send_target_pose(pose);
+    if (is_successful)
+      success_number++;
+    else
+      failure_number++;
+  }
 
-        moveit::planning_interface::MoveGroupInterface::Plan plan_msg;
-        auto const ok = static_cast<bool>(move_group_interface_ptr_->plan(plan_msg));
+  return { success_number, failure_number };
+}
 
-        if (ok) {
-            move_group_interface_ptr_->execute(plan_msg);
-        } else {
-            return false;
-        }
-    }
+bool ScenarioPerceptionPipeline::send_target_pose(geometry_msgs::msg::Pose target_pose)
+{
+  move_group_interface_ptr_->setPoseTarget(target_pose);
 
+  moveit::planning_interface::MoveGroupInterface::Plan plan_msg;
+  const auto ok = static_cast<bool>(move_group_interface_ptr_->plan(plan_msg));
+
+  if (ok)
+  {
+    move_group_interface_ptr_->execute(plan_msg);
     return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
-class ScenarioPerceptionPipelineFixture : public benchmark::Fixture {
+class ScenarioPerceptionPipelineTestCaseCreator
+{
+private:
+  static inline std::vector<std::vector<geometry_msgs::msg::Pose>> test_cases_ = {};
+
 public:
+  static void create_test_cases()
+  {
     std::vector<geometry_msgs::msg::Pose> example_pose_list_;
-    std::shared_ptr<rclcpp::Node> node_;
-    std::shared_ptr<MoveGroupInterface> move_group_interface_ptr_;
 
-    void SetUp(::benchmark::State & state) {
-        geometry_msgs::msg::Pose target_pose1_msg;
-        target_pose1_msg.orientation.w = 1.0;
-        target_pose1_msg.position.x = -0.7;
-        target_pose1_msg.position.y = 0.0;
-        target_pose1_msg.position.z = 0.5;
+    geometry_msgs::msg::Pose target_pose1_msg;
+    target_pose1_msg.orientation.w = 1.0;
+    target_pose1_msg.position.x = -0.7;
+    target_pose1_msg.position.y = 0.0;
+    target_pose1_msg.position.z = 0.5;
 
-        geometry_msgs::msg::Pose target_pose2_msg;
-        target_pose2_msg.orientation.w = 1.0;
-        target_pose2_msg.position.x = 0.4;
-        target_pose2_msg.position.y = 0.0;
-        target_pose2_msg.position.z = 0.7;
+    geometry_msgs::msg::Pose target_pose2_msg;
+    target_pose2_msg.orientation.w = 1.0;
+    target_pose2_msg.position.x = 0.4;
+    target_pose2_msg.position.y = 0.0;
+    target_pose2_msg.position.z = 0.7;
 
-        for (int i = 0; i < 10; i++) {
-            example_pose_list_.push_back(target_pose1_msg);
-            example_pose_list_.push_back(target_pose2_msg);
-        }
-
-        if (node_.use_count() == 0) {
-            node_ = std::make_shared<rclcpp::Node>(
-        "test_scenario_perception_pipeline_node", rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true)
-    );
-        }
-
-        if (move_group_interface_ptr_.use_count() == 0) {
-            move_group_interface_ptr_ = std::make_shared<MoveGroupInterface>(node_, "panda_arm");
-        }
+    for (int i = 0; i < 10; i++)
+    {
+      example_pose_list_.push_back(target_pose1_msg);
+      example_pose_list_.push_back(target_pose2_msg);
     }
 
-    void TearDown(::benchmark::State & state) {
-    }
+    test_cases_.push_back(example_pose_list_);
+  }
+
+  static std::vector<geometry_msgs::msg::Pose> select_test_case(size_t test_case_index)
+  {
+    return test_cases_.at(test_case_index);
+  }
 };
 
-BENCHMARK_DEFINE_F(ScenarioPerceptionPipelineFixture, elma)(benchmark::State & st) {
-    for (auto _ : st) {
-        auto sc = ScenarioPerceptionPipeline(move_group_interface_ptr_);
-        sc.go_to_poses(example_pose_list_);
+class ScenarioPerceptionPipelineFixture : public benchmark::Fixture
+{
+protected:
+  rclcpp::Node::SharedPtr node_;
+  std::shared_ptr<MoveGroupInterface> move_group_interface_ptr_;
+  std::string PLANNING_GROUP;
+
+public:
+  ScenarioPerceptionPipelineFixture()
+  {
+    PLANNING_GROUP = "panda_arm";
+    ScenarioPerceptionPipelineTestCaseCreator::create_test_cases();
+  }
+
+  void SetUp(::benchmark::State& state)
+  {
+    if (node_.use_count() == 0)
+    {
+      node_ =
+          std::make_shared<rclcpp::Node>("test_scenario_perception_pipeline_node",
+                                         rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true));
     }
+
+    if (move_group_interface_ptr_.use_count() == 0)
+    {
+      move_group_interface_ptr_ = std::make_shared<MoveGroupInterface>(node_, PLANNING_GROUP);
+    }
+  }
+
+  void TearDown(::benchmark::State& state)
+  {
+  }
+};
+
+BENCHMARK_DEFINE_F(ScenarioPerceptionPipelineFixture, test_scenario_perception_pipeline)(benchmark::State& st)
+{
+  auto selected_test_case = ScenarioPerceptionPipelineTestCaseCreator::select_test_case(0);
+  for (auto _ : st)
+  {
+    auto sc = ScenarioPerceptionPipeline(move_group_interface_ptr_);
+    sc.run_test_case(selected_test_case);
+  }
 }
 
-BENCHMARK_REGISTER_F(ScenarioPerceptionPipelineFixture, elma);
+BENCHMARK_REGISTER_F(ScenarioPerceptionPipelineFixture, test_scenario_perception_pipeline);
 
-int main(int argc, char ** argv) {
-    rclcpp::init(argc, argv);
-    ::benchmark::Initialize(&argc, argv);
-    ::benchmark::RunSpecifiedBenchmarks();
-    rclcpp::shutdown();
-    return 0;
+int main(int argc, char** argv)
+{
+  rclcpp::init(argc, argv);
+  ::benchmark::Initialize(&argc, argv);
+  ::benchmark::RunSpecifiedBenchmarks();
+  ::benchmark::Shutdown();
+  rclcpp::shutdown();
+  return 0;
 }
