@@ -114,7 +114,7 @@ public:
     ScenarioPerceptionPipelineTestCaseCreator::create_test_cases();
   }
 
-  void SetUp(::benchmark::State& state)
+  void SetUp(::benchmark::State& /*state*/)
   {
     if (node_.use_count() == 0)
     {
@@ -129,7 +129,7 @@ public:
     }
   }
 
-  void TearDown(::benchmark::State& state)
+  void TearDown(::benchmark::State& /*state*/)
   {
   }
 };
