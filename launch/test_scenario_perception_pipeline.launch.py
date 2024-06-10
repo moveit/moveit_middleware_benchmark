@@ -199,10 +199,10 @@ def generate_launch_description():
             mongodb_server_node,
             # for https://github.com/ros-controls/ros2_controllers/issues/981
             RegisterEventHandler(
-                OnProcessStart(
+                OnProcessExit(
                     target_action=panda_arm_controller_spawner,
-                    on_start=[
-                        LogInfo(msg="Started panda_arm_controller_spawner"),
+                    on_exit=[
+                        LogInfo(msg="panda_arm_controller_spawner is finished. Now test_scenario_perception_pipeline will start"),
                         test_scenario_perception_pipeline_node,
                     ],
                 )

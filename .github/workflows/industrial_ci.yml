@@ -10,7 +10,7 @@ jobs:
         ROS_DISTRO: [iron]
         ROS_REPO: [testing, main]
     env:
-      CCACHE_DIR: "${{ github.workspace }}/.ccache" 
+      CCACHE_DIR: "${{ github.workspace }}/.ccache"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
