@@ -7,14 +7,23 @@
 #include <moveit/moveit_cpp/planning_component.h>
 
 #include <geometry_msgs/msg/pose.hpp>
+#include <nav_msgs/msg/path.hpp>
+#include <dynmsg/msg_parser.hpp>
+#include <dynmsg/typesupport.hpp>
+#include <dynmsg/yaml_utils.hpp>
+
+#include <ament_index_cpp/get_package_share_directory.hpp>
+#include <iostream>
 
 using moveit::planning_interface::MoveGroupInterface;
+
+const std::string PLANNING_GROUP = "panda_arm";
 
 class ScenarioPerceptionPipeline
 {
 public:
   ScenarioPerceptionPipeline(std::shared_ptr<MoveGroupInterface>);
-  std::tuple<int, int> runTestCase(const std::vector<geometry_msgs::msg::Pose>& pose_list);
+  std::tuple<int, int> runTestCase(const nav_msgs::msg::Path& pose_list);
   bool sendTargetPose(const geometry_msgs::msg::Pose& target_pose);
 
 private:
@@ -26,13 +35,13 @@ ScenarioPerceptionPipeline::ScenarioPerceptionPipeline(std::shared_ptr<MoveGroup
 {
 }
 
-std::tuple<int, int> ScenarioPerceptionPipeline::runTestCase(const std::vector<geometry_msgs::msg::Pose>& test_case)
+std::tuple<int, int> ScenarioPerceptionPipeline::runTestCase(const nav_msgs::msg::Path& test_case)
 {
   int success_number = 0;
   int failure_number = 0;
-  for (auto& pose : test_case)
+  for (auto& pose_stamped : test_case.poses)
   {
-    bool is_successful = sendTargetPose(pose);
+    bool is_successful = sendTargetPose(pose_stamped.pose);
     if (is_successful)
       success_number++;
     else
@@ -63,37 +72,42 @@ bool ScenarioPerceptionPipeline::sendTargetPose(const geometry_msgs::msg::Pose& 
 class ScenarioPerceptionPipelineTestCaseCreator
 {
 private:
-  static inline std::vector<std::vector<geometry_msgs::msg::Pose>> test_cases_ = {};
+  static inline std::vector<nav_msgs::msg::Path> test_cases_ = {};
 
 public:
   static void createTestCases()
   {
-    std::vector<geometry_msgs::msg::Pose> example_pose_list_;
-
-    geometry_msgs::msg::Pose target_pose1_msg;
-    target_pose1_msg.orientation.w = 1.0;
-    target_pose1_msg.position.x = 0.5;
-    target_pose1_msg.position.y = 0.5;
-    target_pose1_msg.position.z = 0.5;
-
-    geometry_msgs::msg::Pose target_pose2_msg;
-    target_pose2_msg.orientation.w = 1.0;
-    target_pose2_msg.position.x = 0.5;
-    target_pose2_msg.position.y = -0.5;
-    target_pose2_msg.position.z = 0.7;
-
-    for (int i = 0; i < 10; i++)
-    {
-      example_pose_list_.push_back(target_pose1_msg);
-      example_pose_list_.push_back(target_pose2_msg);
-    }
-
-    test_cases_.push_back(example_pose_list_);
+    const std::string yaml_file_path = ament_index_cpp::get_package_share_directory("moveit_middleware_benchmark") +
+                                       "/config/test_scenario_perception_pipeline.yaml";
+    readTestCasesFromFile(yaml_file_path);
   }
 
-  static std::vector<geometry_msgs::msg::Pose> selectTestCases(size_t test_case_index)
+  static nav_msgs::msg::Path selectTestCases(size_t test_case_index)
   {
     return test_cases_.at(test_case_index);
+  }
+
+  static void readTestCasesFromFile(const std::string& yaml_file_name)
+  {
+    YAML::Node config = YAML::LoadFile(yaml_file_name.c_str());
+    for (YAML::const_iterator it = config["test_cases"].begin(); it != config["test_cases"].end(); ++it)
+    {
+      const std::string yaml_string = dynmsg::yaml_to_string(*it);
+      nav_msgs::msg::Path test_case = getTestCaseFromYamlString(yaml_string);
+
+      test_cases_.push_back(test_case);
+    }
+  }
+
+  static nav_msgs::msg::Path getTestCaseFromYamlString(const std::string& yaml_string)
+  {
+    nav_msgs::msg::Path path_msg;
+    void* ros_message = reinterpret_cast<void*>(&path_msg);
+
+    dynmsg::cpp::yaml_and_typeinfo_to_rosmsg(dynmsg::cpp::get_type_info({ "nav_msgs", "Path" }), yaml_string,
+                                             ros_message);
+
+    return path_msg;
   }
 };
 
@@ -102,12 +116,11 @@ class ScenarioPerceptionPipelineFixture : public benchmark::Fixture
 protected:
   rclcpp::Node::SharedPtr node_;
   std::shared_ptr<MoveGroupInterface> move_group_interface_ptr_;
-  std::string PLANNING_GROUP;
+  size_t selected_test_case_index_;
 
 public:
   ScenarioPerceptionPipelineFixture()
   {
-    PLANNING_GROUP = "panda_arm";
     ScenarioPerceptionPipelineTestCaseCreator::createTestCases();
   }
 
@@ -118,6 +131,8 @@ public:
       node_ =
           std::make_shared<rclcpp::Node>("test_scenario_perception_pipeline_node",
                                          rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true));
+
+      node_->get_parameter("selected_test_case_index", selected_test_case_index_);
     }
 
     if (move_group_interface_ptr_.use_count() == 0)
@@ -133,11 +148,13 @@ public:
 
 BENCHMARK_DEFINE_F(ScenarioPerceptionPipelineFixture, test_scenario_perception_pipeline)(benchmark::State& st)
 {
-  auto selected_test_case = ScenarioPerceptionPipelineTestCaseCreator::selectTestCases(0);
+  auto selected_test_case = ScenarioPerceptionPipelineTestCaseCreator::selectTestCases(selected_test_case_index_);
   for (auto _ : st)
   {
     auto sc = ScenarioPerceptionPipeline(move_group_interface_ptr_);
-    sc.runTestCase(selected_test_case);
+    auto [success_number, failure_number] = sc.runTestCase(selected_test_case);
+    st.counters["success_number"] = success_number;
+    st.counters["failure_number"] = failure_number;
   }
 }
 
@@ -146,9 +163,9 @@ BENCHMARK_REGISTER_F(ScenarioPerceptionPipelineFixture, test_scenario_perception
 int main(int argc, char** argv)
 {
   rclcpp::init(argc, argv);
-  ::benchmark::Initialize(&argc, argv);
-  ::benchmark::RunSpecifiedBenchmarks();
-  ::benchmark::Shutdown();
+  benchmark::Initialize(&argc, argv);
+  benchmark::RunSpecifiedBenchmarks();
+  benchmark::Shutdown();
   rclcpp::shutdown();
   return 0;
 }

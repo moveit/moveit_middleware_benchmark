@@ -7,32 +7,16 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
 from moveit_configs_utils import MoveItConfigsBuilder
-from launch_param_builder import ParameterBuilder
 from launch.actions import (
     DeclareLaunchArgument,
-    EmitEvent,
     ExecuteProcess,
     LogInfo,
     RegisterEventHandler,
-    TimerAction,
 )
-from launch.event_handlers import (
-    OnExecutionComplete,
-    OnProcessExit,
-    OnProcessIO,
-    OnProcessStart,
-    OnShutdown,
-)
+from launch.event_handlers import OnProcessExit
 
 
 def generate_launch_description():
-    # Command-line arguments
-    rviz_config_arg = DeclareLaunchArgument(
-        "rviz_config",
-        default_value="moveit.rviz",
-        description="RViz configuration file",
-    )
-
     db_arg = DeclareLaunchArgument(
         "db", default_value="False", description="Database flag"
     )
@@ -64,7 +48,7 @@ def generate_launch_description():
         )
         .sensors_3d(
             file_path=os.path.join(
-                get_package_share_directory("moveit2_tutorials"),
+                get_package_share_directory("moveit_middleware_benchmark"),
                 "config/sensors_3d.yaml",
             )
         )
@@ -78,26 +62,6 @@ def generate_launch_description():
         output="screen",
         parameters=[moveit_config.to_dict()],
         arguments=["--ros-args", "--log-level", "info"],
-    )
-
-    # RViz
-    rviz_base = LaunchConfiguration("rviz_config")
-    rviz_config = PathJoinSubstitution(
-        [FindPackageShare("moveit_resources_panda_moveit_config"), "launch", rviz_base]
-    )
-    rviz_node = Node(
-        package="rviz2",
-        executable="rviz2",
-        name="rviz2",
-        output="log",
-        arguments=["-d", rviz_config],
-        parameters=[
-            moveit_config.robot_description,
-            moveit_config.robot_description_semantic,
-            moveit_config.planning_pipelines,
-            moveit_config.robot_description_kinematics,
-            moveit_config.joint_limits,
-        ],
     )
 
     # Static TF
@@ -175,20 +139,23 @@ def generate_launch_description():
         package="moveit_middleware_benchmark",
         executable="test_scenario_perception_pipeline",
         output="both",
+        arguments=[
+            "--benchmark_out=benchmark_scenario_perception_pipeline.json",
+            "--benchmark_out_format=json",
+        ],
         parameters=[
             moveit_config.robot_description,
             moveit_config.robot_description_semantic,
             moveit_config.robot_description_kinematics,
             {"use_sim_time": True},
+            {"selected_test_case_index": 0},
         ],
     )
 
     return LaunchDescription(
         [
-            # rviz_config_arg,
             db_arg,
             ros2_control_hardware_type,
-            # rviz_node,
             static_tf_node,
             robot_state_publisher,
             move_group_node,
@@ -202,7 +169,9 @@ def generate_launch_description():
                 OnProcessExit(
                     target_action=panda_arm_controller_spawner,
                     on_exit=[
-                        LogInfo(msg="panda_arm_controller_spawner is finished. Now test_scenario_perception_pipeline will start"),
+                        LogInfo(
+                            msg="panda_arm_controller_spawner is finished. Now test_scenario_perception_pipeline will start"
+                        ),
                         test_scenario_perception_pipeline_node,
                     ],
                 )
