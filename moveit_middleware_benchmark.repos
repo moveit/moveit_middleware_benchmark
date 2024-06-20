@@ -6,12 +6,12 @@ repositories:
   moveit_resources:
     type: git
     url: https://github.com/moveit/moveit_resources.git
-    version: main
+    version: ros2
   rmw_zenoh:
     type: git
     url: https://github.com/ros2/rmw_zenoh.git
-    version: main
+    version: rolling
   dynamic_message_introspection:
     type: git
-    url: git@github.com:osrf/dynamic_message_introspection.git
+    url: https://github.com/osrf/dynamic_message_introspection.git
     version: main

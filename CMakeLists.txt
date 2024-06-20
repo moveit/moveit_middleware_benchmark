@@ -13,6 +13,7 @@ find_package(benchmark REQUIRED)
 find_package(dynmsg REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(ament_index_cpp REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 add_executable(test_scenario_perception_pipeline
                test/test_scenario_perception_pipeline.cpp)
@@ -24,7 +25,8 @@ ament_target_dependencies(
   "rclcpp"
   "benchmark"
   "dynmsg"
-  "nav_msgs")
+  "nav_msgs"
+  "yaml-cpp")
 
 target_include_directories(
   test_scenario_perception_pipeline
@@ -32,7 +34,7 @@ target_include_directories(
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
 target_link_libraries(test_scenario_perception_pipeline
-                      PUBLIC "benchmark::benchmark")
+                      PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
 
 install(TARGETS test_scenario_perception_pipeline
         DESTINATION lib/${PROJECT_NAME})

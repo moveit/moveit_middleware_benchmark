@@ -148,7 +148,7 @@ def generate_launch_description():
             moveit_config.robot_description_semantic,
             moveit_config.robot_description_kinematics,
             {"use_sim_time": True},
-            {"selected_test_case_index": 0},
+            {"selected_test_case_index": 1},
         ],
     )
 
