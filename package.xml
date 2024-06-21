@@ -3,7 +3,7 @@
 <package format="3">
   <name>moveit_middleware_benchmark</name>
   <version>0.0.0</version>
-  <description>Middleware Benchmark Tool For MoveIt pipelines</description>
+  <description>Middleware Benchmark Tool For MoveIt Pipelines</description>
   <maintainer email="cihataltiparmak1@gmail.com">Cihat Kurtuluş Altıparmak</maintainer>
   <license>BSD</license>
 
@@ -16,6 +16,10 @@
   <depend>nav_msgs</depend>
   <depend>ament_index_cpp</depend>
   <depend>yaml-cpp</depend>
+
+  <exec_depend>rmw_zenoh</exec_depend>
+  <exec_depend>rmw_fastrtps</exec_depend>
+  <exec_depend>rmw_cyclonedds</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

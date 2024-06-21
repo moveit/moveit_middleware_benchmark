@@ -26,7 +26,7 @@ colcon build --mixin release
 source /opt/ros/rolling/setup.bash
 source install/setup.bash
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp # select your rmw_implementation to benchmark
-ros2 launch moveit_middleware_benchmark test_scenario_perception_pipeline.launch.py
+ros2 launch moveit_middleware_benchmark moveit_middleware_benchmark_demo.launch.py
 
 ```
 

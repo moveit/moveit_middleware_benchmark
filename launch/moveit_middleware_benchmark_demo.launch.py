@@ -134,13 +134,13 @@ def generate_launch_description():
         condition=IfCondition(db_config),
     )
 
-    test_scenario_perception_pipeline_node = Node(
-        name="test_scenario_perception_pipeline_node",
+    benchmark_main_node = Node(
+        name="benchmark_main",
         package="moveit_middleware_benchmark",
-        executable="test_scenario_perception_pipeline",
+        executable="benchmark_main",
         output="both",
         arguments=[
-            "--benchmark_out=benchmark_scenario_perception_pipeline.json",
+            "--benchmark_out=middleware_benchmark_results.json",
             "--benchmark_out_format=json",
         ],
         parameters=[
@@ -172,7 +172,7 @@ def generate_launch_description():
                         LogInfo(
                             msg="panda_arm_controller_spawner is finished. Now test_scenario_perception_pipeline will start"
                         ),
-                        test_scenario_perception_pipeline_node,
+                        benchmark_main_node,
                     ],
                 )
             ),
