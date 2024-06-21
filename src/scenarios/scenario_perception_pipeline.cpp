@@ -34,7 +34,7 @@
 
 /* Author: Cihat Kurtuluş Altıparmak
    Description: Benchmarking module to compare the effects of middlewares
-   against perception pipeline of
+   against perception pipeline
  */
 
 #include "moveit_middleware_benchmark/scenarios/scenario_perception_pipeline.hpp"
@@ -70,9 +70,7 @@ bool ScenarioPerceptionPipeline::sendTargetPose(const geometry_msgs::msg::Pose& 
   move_group_interface_ptr_->setPoseTarget(target_pose);
 
   moveit::planning_interface::MoveGroupInterface::Plan plan_msg;
-  const auto ok = static_cast<bool>(move_group_interface_ptr_->plan(plan_msg));
-
-  if (ok)
+  if (move_group_interface_ptr_->plan(plan_msg) == moveit::core::MoveItErrorCode::SUCCESS)
   {
     move_group_interface_ptr_->execute(plan_msg);
     return true;
@@ -85,9 +83,7 @@ bool ScenarioPerceptionPipeline::sendTargetPose(const geometry_msgs::msg::Pose& 
 
 void ScenarioPerceptionPipelineTestCaseCreator::createTestCases()
 {
-  const std::string yaml_file_path = ament_index_cpp::get_package_share_directory("moveit_middleware_benchmark") +
-                                     "/config/test_scenario_perception_pipeline.yaml";
-  readTestCasesFromFile(yaml_file_path);
+  readTestCasesFromFile(TEST_CASES_YAML_FILE);
 }
 
 nav_msgs::msg::Path ScenarioPerceptionPipelineTestCaseCreator::selectTestCases(size_t test_case_index)

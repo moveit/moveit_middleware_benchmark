@@ -17,9 +17,9 @@
   <depend>ament_index_cpp</depend>
   <depend>yaml-cpp</depend>
 
-  <exec_depend>rmw_zenoh</exec_depend>
-  <exec_depend>rmw_fastrtps</exec_depend>
-  <exec_depend>rmw_cyclonedds</exec_depend>
+  <exec_depend>rmw_zenoh_cpp</exec_depend>
+  <exec_depend>rmw_fastrtps_cpp</exec_depend>
+  <exec_depend>rmw_cyclonedds_cpp</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
