@@ -81,41 +81,9 @@ bool ScenarioPerceptionPipeline::sendTargetPose(const geometry_msgs::msg::Pose& 
   }
 }
 
-void ScenarioPerceptionPipelineTestCaseCreator::createTestCases()
-{
-  readTestCasesFromFile(TEST_CASES_YAML_FILE);
-}
-
-nav_msgs::msg::Path ScenarioPerceptionPipelineTestCaseCreator::selectTestCases(size_t test_case_index)
-{
-  return test_cases_.at(test_case_index);
-}
-
-void ScenarioPerceptionPipelineTestCaseCreator::readTestCasesFromFile(const std::string& yaml_file_name)
-{
-  YAML::Node config = YAML::LoadFile(yaml_file_name.c_str());
-  for (YAML::const_iterator it = config["test_cases"].begin(); it != config["test_cases"].end(); ++it)
-  {
-    const std::string yaml_string = dynmsg::yaml_to_string(*it);
-    nav_msgs::msg::Path test_case = getTestCaseFromYamlString(yaml_string);
-
-    test_cases_.push_back(test_case);
-  }
-}
-
-nav_msgs::msg::Path ScenarioPerceptionPipelineTestCaseCreator::getTestCaseFromYamlString(const std::string& yaml_string)
-{
-  nav_msgs::msg::Path path_msg;
-  void* ros_message = reinterpret_cast<void*>(&path_msg);
-
-  dynmsg::cpp::yaml_and_typeinfo_to_rosmsg(dynmsg::cpp::get_type_info({ "nav_msgs", "Path" }), yaml_string, ros_message);
-
-  return path_msg;
-}
-
 ScenarioPerceptionPipelineFixture::ScenarioPerceptionPipelineFixture()
 {
-  ScenarioPerceptionPipelineTestCaseCreator::createTestCases();
+  createTestCases();
 }
 
 void ScenarioPerceptionPipelineFixture::SetUp(::benchmark::State& /*state*/)
@@ -138,9 +106,41 @@ void ScenarioPerceptionPipelineFixture::TearDown(::benchmark::State& /*state*/)
 {
 }
 
+void ScenarioPerceptionPipelineFixture::createTestCases()
+{
+  readTestCasesFromFile(TEST_CASES_YAML_FILE);
+}
+
+nav_msgs::msg::Path ScenarioPerceptionPipelineFixture::selectTestCase(size_t test_case_index)
+{
+  return test_cases_.at(test_case_index);
+}
+
+void ScenarioPerceptionPipelineFixture::readTestCasesFromFile(const std::string& yaml_file_name)
+{
+  YAML::Node config = YAML::LoadFile(yaml_file_name.c_str());
+  for (YAML::const_iterator it = config["test_cases"].begin(); it != config["test_cases"].end(); ++it)
+  {
+    const std::string yaml_string = dynmsg::yaml_to_string(*it);
+    nav_msgs::msg::Path test_case = getTestCaseFromYamlString(yaml_string);
+
+    test_cases_.push_back(test_case);
+  }
+}
+
+nav_msgs::msg::Path ScenarioPerceptionPipelineFixture::getTestCaseFromYamlString(const std::string& yaml_string)
+{
+  nav_msgs::msg::Path path_msg;
+  void* ros_message = reinterpret_cast<void*>(&path_msg);
+
+  dynmsg::cpp::yaml_and_typeinfo_to_rosmsg(dynmsg::cpp::get_type_info({ "nav_msgs", "Path" }), yaml_string, ros_message);
+
+  return path_msg;
+}
+
 BENCHMARK_DEFINE_F(ScenarioPerceptionPipelineFixture, test_scenario_perception_pipeline)(benchmark::State& st)
 {
-  auto selected_test_case = ScenarioPerceptionPipelineTestCaseCreator::selectTestCases(selected_test_case_index_);
+  auto selected_test_case = selectTestCase(selected_test_case_index_);
   for (auto _ : st)
   {
     auto sc = ScenarioPerceptionPipeline(move_group_interface_ptr_);

@@ -76,7 +76,7 @@ public:
   /** \brief Constructor for interface to send goal poses
    *  \param [in] move_group_interface_ptr The move_group_interface for sending goal poses
    */
-  ScenarioPerceptionPipeline(std::shared_ptr<MoveGroupInterface>);
+  ScenarioPerceptionPipeline(std::shared_ptr<MoveGroupInterface> move_group_interface_ptr);
 
   /** \brief Given a \e pose_list, sends poses in pose_list to plan,
    *  if the pipeline in \e sendTargetPose returns true,
@@ -102,55 +102,61 @@ private:
   std::shared_ptr<MoveGroupInterface> move_group_interface_ptr_;
 };
 
-class ScenarioPerceptionPipelineTestCaseCreator
-{
-private:
-  /** the list of test cases to be tested */
-  static inline std::vector<nav_msgs::msg::Path> test_cases_ = {};
-
-public:
-  /** \brief Creates test_cases by filling \e test_cases_
-   *  If the planning is failed, the execution is ignored and then it is returned false
-   *  \return nothing is returned
-   */
-  static void createTestCases();
-
-  /** \brief Given a \e test_case_index, returns relevant test case.
-   *  \param [in] test_case_index The index of test_case
-   *  \return selected test case
-   */
-  static nav_msgs::msg::Path selectTestCases(size_t test_case_index);
-
-  /** \brief Given a \e yaml_file_name, reads test cases from given yaml file
-   *  and adds this read test cases to \e test_cases_
-   *  \param [in] yaml_file_name the path of yaml file which includes test cases
-   *  \return nothing is returned
-   */
-  static void readTestCasesFromFile(const std::string& yaml_file_name);
-
-  /** \brief Given a \e yaml_string, converts yaml_string to ros message
-   *  and returns this ros message.
-   *  \param [in] yaml_string the yaml string storing ros message fields
-   *  \return nav_msgs::msg::Path which contains pose_list is returned
-   */
-  static nav_msgs::msg::Path getTestCaseFromYamlString(const std::string& yaml_string);
-};
-
 class ScenarioPerceptionPipelineFixture : public benchmark::Fixture
 {
 protected:
   /* ros node shared ptr*/
   rclcpp::Node::SharedPtr node_;
+
   /* move_group_interface_ptr for communicating with move_group_server */
   std::shared_ptr<MoveGroupInterface> move_group_interface_ptr_;
 
   /* selected test case index for benchmarking */
   size_t selected_test_case_index_;
 
+  /** the list of test cases to be tested */
+  std::vector<nav_msgs::msg::Path> test_cases_ = {};
+
 public:
   ScenarioPerceptionPipelineFixture();
+
+  /** \brief This method runs once each benchmark starts
+   *  \param [in] state
+   *  \return nothing is returned
+   */
   void SetUp(::benchmark::State& /*state*/);
+
+  /** \brief This method runs as soon as each benchmark finishes
+   *  \param [in] state
+   *  \return nothing is returned
+   */
   void TearDown(::benchmark::State& /*state*/);
+
+  /** \brief Creates test_cases by filling \e test_cases_
+   *  If the planning is failed, the execution is ignored and then it is returned false
+   *  \return nothing is returned
+   */
+  void createTestCases();
+
+  /** \brief Given a \e test_case_index, returns relevant test case.
+   *  \param [in] test_case_index The index of test_case
+   *  \return selected test case
+   */
+  nav_msgs::msg::Path selectTestCase(size_t test_case_index);
+
+  /** \brief Given a \e yaml_file_name, reads test cases from given yaml file
+   *  and adds this read test cases to \e test_cases_
+   *  \param [in] yaml_file_name the path of yaml file which includes test cases
+   *  \return nothing is returned
+   */
+  void readTestCasesFromFile(const std::string& yaml_file_name);
+
+  /** \brief Given a \e yaml_string, converts yaml_string to ros message
+   *  and returns this ros message.
+   *  \param [in] yaml_string the yaml string storing ros message fields
+   *  \return nav_msgs::msg::Path which contains pose_list is returned
+   */
+  nav_msgs::msg::Path getTestCaseFromYamlString(const std::string& yaml_string);
 };
 
 }  // namespace middleware_benchmark
