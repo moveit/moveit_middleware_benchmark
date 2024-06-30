@@ -1,0 +1,6 @@
+test_cases:
+  - angular:
+      z : 1.2
+    
+  - linear:
+      x : 1.2

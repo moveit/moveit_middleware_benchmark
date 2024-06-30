@@ -150,7 +150,9 @@ BENCHMARK_DEFINE_F(ScenarioPerceptionPipelineFixture, test_scenario_perception_p
   }
 }
 
-BENCHMARK_REGISTER_F(ScenarioPerceptionPipelineFixture, test_scenario_perception_pipeline);
+BENCHMARK_REGISTER_F(ScenarioPerceptionPipelineFixture, test_scenario_perception_pipeline)
+    ->MeasureProcessCPUTime()
+    ->UseRealTime();
 
 }  // namespace middleware_benchmark
 }  // namespace moveit
