@@ -9,7 +9,7 @@ cd ws
 # Be sure that ros2 daemon is killed.
 pkill -9 -f ros && ros2 daemon stop
 # Then start zenoh router
-ros2 run rmw_zenoh_cpp rmw_zenohd 
+ros2 run rmw_zenoh_cpp rmw_zenohd
 ```
 
 Select your rmw_implementation as `rmw_zenoh_cpp` and run the perception benchmark launch file.
@@ -19,7 +19,7 @@ cd ws
 source /opt/ros/rolling/setup.bash
 source install/setup.bash
 export RMW_IMPLEMENTATION=rmw_zenoh_cpp # select your rmw_implementation to benchmark
-ros2 launch moveit_middleware_benchmark moveit_middleware_benchmark_demo.launch.py
+ros2 launch moveit_middleware_benchmark scenario_perception_pipeline_benchmark.launch.py
 ```
 
 It will be created the json file named `middleware_benchmark_results.json` for benchmarking results after finishing benchmark code execution. You can see the benchmark results in more detail inside this json file.
@@ -30,7 +30,7 @@ The main idea here is to send some goal poses in `nav_msgs/msg/Path` format to m
 
 ## How to create test cases
 
-You can add your test cases to `scenario_perception_pipeline_test_cases.yaml` file. For benchmarking of the scenario of perception pipeline, your test case must be presented in a type of nav_msgs/msg/Path. `poses` section presents `poses` field of `nav_msgs/msg/Path` type. There is a following example test case file. 
+You can add your test cases to `scenario_perception_pipeline_test_cases.yaml` file. For benchmarking of the scenario of perception pipeline, your test case must be presented in a type of nav_msgs/msg/Path. `poses` section presents `poses` field of `nav_msgs/msg/Path` type. There is a following example test case file.
 
 ```yaml
 test_cases:

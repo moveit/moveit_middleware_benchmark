@@ -3,7 +3,7 @@
 
 Firstly, setup the dependencies of moveit_middleware_benchmark repositories. It's suggested to test with rolling version of ROS.
 ```sh
-# install colcon extentions
+# install colcon extensions
 source /opt/ros/rolling/setup.bash
 sudo apt install python3-colcon-common-extensions
 sudo apt install python3-colcon-mixin
@@ -14,7 +14,7 @@ colcon mixin update default
 mkdir ws/src -p
 cd ws/src
 
-# clone this repository 
+# clone this repository
 git clone git@github.com:CihatAltiparmak/moveit_middleware_benchmark.git -b fix/refactor_codebase
 vsc import moveit_middleware_benchmark/moveit_middleware_benchmark.repos --recursive
 
