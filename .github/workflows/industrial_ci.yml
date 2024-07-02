@@ -1,0 +1,24 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  industrial_ci:
+    name: ROS ${{ matrix.ROS_DISTRO }} (${{ matrix.ROS_REPO }})
+    strategy:
+      matrix:
+        ROS_DISTRO: [rolling]
+        ROS_REPO: [testing, main]
+        UPSTREAM_WORKSPACE: [moveit_middleware_benchmark.repos]
+        UPSTREAM_CMAKE_ARGS: [-DCMAKE_BUILD_TYPE=Release --packages-skip test_dynmsg dynmsg_demo]
+    env:
+      CCACHE_DIR: "${{ github.workspace }}/.ccache"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: 'ros-industrial/industrial_ci@master'
+        env:
+          ROS_DISTRO: ${{ matrix.ROS_DISTRO }}
+          ROS_REPO: ${{ matrix.ROS_REPO }}
+          UPSTREAM_WORKSPACE: ${{ matrix.UPSTREAM_WORKSPACE }}
+          UPSTREAM_CMAKE_ARGS: ${{ matrix.UPSTREAM_CMAKE_ARGS }}

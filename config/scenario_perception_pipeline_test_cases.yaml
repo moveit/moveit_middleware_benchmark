@@ -1,0 +1,157 @@
+test_cases:
+  - poses:
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+  - poses:
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
