@@ -137,7 +137,7 @@ def generate_launch_description():
     benchmark_main_node = Node(
         name="benchmark_main",
         package="moveit_middleware_benchmark",
-        executable="benchmark_main",
+        executable="scenario_perception_pipeline_benchmark_main",
         output="both",
         arguments=[
             "--benchmark_out=middleware_benchmark_results.json",

@@ -15,11 +15,13 @@ find_package(nav_msgs REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
-add_executable(benchmark_main src/benchmark_main.cpp
-                              src/scenarios/scenario_perception_pipeline.cpp)
+add_executable(
+  scenario_perception_pipeline_benchmark_main
+  src/scenario_perception_pipeline_benchmark_main.cpp
+  src/scenarios/scenario_perception_pipeline.cpp)
 
 ament_target_dependencies(
-  benchmark_main
+  scenario_perception_pipeline_benchmark_main
   PUBLIC
   "moveit_ros_planning_interface"
   "rclcpp"
@@ -29,13 +31,15 @@ ament_target_dependencies(
   "yaml-cpp")
 
 target_include_directories(
-  benchmark_main PUBLIC $<INSTALL_INTERFACE:include>
-                        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+  scenario_perception_pipeline_benchmark_main
+  PUBLIC $<INSTALL_INTERFACE:include>
+         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
-target_link_libraries(benchmark_main PUBLIC "benchmark::benchmark"
-                                            ${YAML_CPP_LIBRARIES})
+target_link_libraries(scenario_perception_pipeline_benchmark_main
+                      PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
 
-install(TARGETS benchmark_main DESTINATION lib/${PROJECT_NAME})
+install(TARGETS scenario_perception_pipeline_benchmark_main
+        DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME})
 
