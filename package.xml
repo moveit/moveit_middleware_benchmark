@@ -3,7 +3,7 @@
 <package format="3">
   <name>moveit_middleware_benchmark</name>
   <version>0.0.0</version>
-  <description>Middleware Benchmark Tool For MoveIt Pipelines</description>
+  <description>Middleware Benchmark Tool For MoveIt2</description>
   <maintainer email="cihataltiparmak1@gmail.com">Cihat Kurtuluş Altıparmak</maintainer>
   <license>BSD</license>
 

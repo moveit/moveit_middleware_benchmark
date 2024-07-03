@@ -2,32 +2,22 @@
 
 Under Construction
 
+[![CI (Rolling)](https://github.com/CihatAltiparmak/moveit_middleware_benchmark/actions/workflows/industrial_ci.yml/badge.svg?branch=main)](https://github.com/CihatAltiparmak/moveit_middleware_benchmark/actions/workflows/industrial_ci.yml?query=branch%3Amain)
+
+*Middleware Benchmark Tool For MoveIt2*
+
+This middleware benchmark tool aims to measure middleware effects on various scenarios like perception pipeline in MoveIt. There is a following list to see scenarios and how to measure the effects of middleware.
+
+* [Perception Pipeline](./docs/scenarios/perception_pipeline_benchmark.md)
+
+## Getting Started
+
+See our [documentation](./docs/index.md).
+
 ## How To Install
 
+* [Source Build](./docs/how_to_install.md)
 
-```sh
-source /opt/ros/rolling/setup.bash
-sudo apt install python3-colcon-common-extensions
-sudo apt install python3-colcon-mixin
-colcon mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml
-colcon mixin update default
-mkdir ws/src -p
-cd ws/src
-git clone git@github.com:CihatAltiparmak/moveit_middleware_benchmark.git -b fix/refactor_codebase
-vsc import moveit_middleware_benchmark/moveit_middleware_benchmark.repos --recursive
-cd ws
-sudo apt update && rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
-colcon build --mixin release
-```
+## More Info
 
-## How To Run
-
-```sh
-source /opt/ros/rolling/setup.bash
-source install/setup.bash
-export RMW_IMPLEMENTATION=rmw_fastrtps_cpp # select your rmw_implementation to benchmark
-ros2 launch moveit_middleware_benchmark scenario_perception_pipeline_benchmark.launch.py
-
-```
-
-It will be created the json file for benchmarking results after finishing benchmark code execution.
+* [How To Run](./docs/how_to_run.md)
