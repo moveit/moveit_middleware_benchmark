@@ -39,8 +39,8 @@ target_link_libraries(scenario_perception_pipeline_benchmark_main
                       PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
 
 install(TARGETS scenario_perception_pipeline_benchmark_main
-        DESTINATION lib/${PROJECT_NAME})
+        DESTINATION lib/moveit_middleware_benchmark)
 
-install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY launch config DESTINATION share/moveit_middleware_benchmark)
 
 ament_package()
