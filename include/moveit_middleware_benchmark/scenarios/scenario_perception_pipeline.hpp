@@ -98,43 +98,27 @@ public:
   bool sendTargetPose(const geometry_msgs::msg::Pose& target_pose);
 
 private:
-  /** move_group_interface_ptr to communicate with move_grouo_server */
+  /** move_group_interface_ptr to communicate with move_group_server */
   std::shared_ptr<MoveGroupInterface> move_group_interface_ptr_;
 };
 
 class ScenarioPerceptionPipelineFixture : public benchmark::Fixture
 {
-protected:
-  /* ros node shared ptr*/
-  rclcpp::Node::SharedPtr node_;
-
-  /* move_group_interface_ptr for communicating with move_group_server */
-  std::shared_ptr<MoveGroupInterface> move_group_interface_ptr_;
-
-  /* selected test case index for benchmarking */
-  size_t selected_test_case_index_;
-
-  /** the list of test cases to be tested */
-  std::vector<nav_msgs::msg::Path> test_cases_ = {};
-
 public:
   ScenarioPerceptionPipelineFixture();
 
   /** \brief This method runs once each benchmark starts
    *  \param [in] state
-   *  \return nothing is returned
    */
   void SetUp(::benchmark::State& /*state*/);
 
   /** \brief This method runs as soon as each benchmark finishes
    *  \param [in] state
-   *  \return nothing is returned
    */
   void TearDown(::benchmark::State& /*state*/);
 
   /** \brief Creates test_cases by filling \e test_cases_
    *  If the planning is failed, the execution is ignored and then it is returned false
-   *  \return nothing is returned
    */
   void createTestCases();
 
@@ -147,7 +131,6 @@ public:
   /** \brief Given a \e yaml_file_name, reads test cases from given yaml file
    *  and adds this read test cases to \e test_cases_
    *  \param [in] yaml_file_name the path of yaml file which includes test cases
-   *  \return nothing is returned
    */
   void readTestCasesFromFile(const std::string& yaml_file_name);
 
@@ -157,6 +140,18 @@ public:
    *  \return nav_msgs::msg::Path which contains pose_list is returned
    */
   nav_msgs::msg::Path getTestCaseFromYamlString(const std::string& yaml_string);
+
+protected:
+  rclcpp::Node::SharedPtr node_;
+
+  /* move_group_interface_ptr for communicating with move_group_server */
+  std::shared_ptr<MoveGroupInterface> move_group_interface_ptr_;
+
+  /* selected test case index for benchmarking */
+  size_t selected_test_case_index_;
+
+  /** the list of test cases to be tested */
+  std::vector<nav_msgs::msg::Path> test_cases_ = {};
 };
 
 }  // namespace middleware_benchmark
