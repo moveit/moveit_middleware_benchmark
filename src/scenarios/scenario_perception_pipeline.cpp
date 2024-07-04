@@ -111,7 +111,7 @@ void ScenarioPerceptionPipelineFixture::createTestCases()
   readTestCasesFromFile(TEST_CASES_YAML_FILE);
 }
 
-nav_msgs::msg::Path ScenarioPerceptionPipelineFixture::selectTestCase(size_t test_case_index)
+const nav_msgs::msg::Path ScenarioPerceptionPipelineFixture::selectTestCase(size_t test_case_index)
 {
   return test_cases_.at(test_case_index);
 }

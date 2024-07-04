@@ -126,7 +126,7 @@ public:
    *  \param [in] test_case_index The index of test_case
    *  \return selected test case
    */
-  nav_msgs::msg::Path selectTestCase(size_t test_case_index);
+  const nav_msgs::msg::Path selectTestCase(size_t test_case_index);
 
   /** \brief Given a \e yaml_file_name, reads test cases from given yaml file
    *  and adds this read test cases to \e test_cases_
