@@ -15,7 +15,7 @@ mkdir ws/src -p
 cd ws/src
 
 # clone this repository
-git clone git@github.com:CihatAltiparmak/moveit_middleware_benchmark.git -b fix/refactor_codebase
+git clone git@github.com:CihatAltiparmak/moveit_middleware_benchmark.git
 vsc import moveit_middleware_benchmark/moveit_middleware_benchmark.repos --recursive
 
 # build the workspace
