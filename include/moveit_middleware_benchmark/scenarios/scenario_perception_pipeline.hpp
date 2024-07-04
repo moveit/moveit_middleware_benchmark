@@ -41,11 +41,7 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <benchmark/benchmark.h>
-#include <moveit/move_group_interface/move_group_interface.h>
 #include <memory>
-
-#include <moveit/moveit_cpp/moveit_cpp.h>
-#include <moveit/moveit_cpp/planning_component.h>
 
 #include <geometry_msgs/msg/pose.hpp>
 #include <nav_msgs/msg/path.hpp>
@@ -54,6 +50,10 @@
 #include <dynmsg/yaml_utils.hpp>
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
+
+#include <moveit/moveit_cpp/moveit_cpp.h>
+#include <moveit/moveit_cpp/planning_component.h>
+#include <moveit/move_group_interface/move_group_interface.h>
 
 namespace
 {
