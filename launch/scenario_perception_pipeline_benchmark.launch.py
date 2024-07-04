@@ -17,10 +17,6 @@ from launch.event_handlers import OnProcessExit
 
 
 def generate_launch_description():
-    db_arg = DeclareLaunchArgument(
-        "db", default_value="False", description="Database flag"
-    )
-
     ros2_control_hardware_type = DeclareLaunchArgument(
         "ros2_control_hardware_type",
         default_value="mock_components",
@@ -120,20 +116,6 @@ def generate_launch_description():
         arguments=["panda_hand_controller", "-c", "/controller_manager"],
     )
 
-    # Warehouse mongodb server
-    db_config = LaunchConfiguration("db")
-    mongodb_server_node = Node(
-        package="warehouse_ros_mongo",
-        executable="mongo_wrapper_ros.py",
-        parameters=[
-            {"warehouse_port": 33829},
-            {"warehouse_host": "localhost"},
-            {"warehouse_plugin": "warehouse_ros_mongo::MongoDatabaseConnection"},
-        ],
-        output="screen",
-        condition=IfCondition(db_config),
-    )
-
     benchmark_main_node = Node(
         name="benchmark_main",
         package="moveit_middleware_benchmark",
@@ -154,7 +136,6 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
-            db_arg,
             ros2_control_hardware_type,
             static_tf_node,
             robot_state_publisher,
@@ -163,7 +144,6 @@ def generate_launch_description():
             joint_state_broadcaster_spawner,
             panda_arm_controller_spawner,
             panda_hand_controller_spawner,
-            mongodb_server_node,
             # for https://github.com/ros-controls/ros2_controllers/issues/981
             RegisterEventHandler(
                 OnProcessExit(
