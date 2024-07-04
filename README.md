@@ -12,12 +12,6 @@ This middleware benchmark tool aims to measure middleware effects on various sce
 
 ## Getting Started
 
-See our [documentation](./docs/index.md).
-
-## How To Install
-
-* [Source Build](./docs/how_to_install.md)
-
-## More Info
-
+* [How To Install](./docs/how_to_install.md)
 * [How To Run](./docs/how_to_run.md)
+* [Scenarios](./docs/scenarios/)
