@@ -37,6 +37,7 @@ def generate_launch_description():
         get_package_share_directory("moveit_servo")
         + "/config/demo_rviz_config_ros.rviz"
     )
+
     rviz_node = launch_ros.actions.Node(
         package="rviz2",
         executable="rviz2",
@@ -143,7 +144,7 @@ def generate_launch_description():
 
     benchmark_node = launch_ros.actions.Node(
         package="moveit_middleware_benchmark",
-        executable="servo_main",
+        executable="servo_benchmark_main",
         name="servo_main_node",
         parameters=[
             servo_params,
@@ -154,17 +155,19 @@ def generate_launch_description():
             moveit_config.robot_description_kinematics,
             moveit_config.joint_limits,
             {"selected_test_case_index": 0},
+            {"selected_link": "panda_link4"},
         ],
         output="screen",
+        on_exit=launch.actions.Shutdown(),
     )
 
     return launch.LaunchDescription(
         [
             benchmark_node,
             rviz_node,
-            ros2_control_node,
-            joint_state_broadcaster_spawner,
-            panda_arm_controller_spawner,
+            # ros2_control_node,
+            # joint_state_broadcaster_spawner,
+            # panda_arm_controller_spawner,
             servo_node,
             container,
         ]
