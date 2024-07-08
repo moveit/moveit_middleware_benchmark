@@ -47,6 +47,9 @@ namespace middleware_benchmark
 class ProcessUtils
 {
 public:
+  ProcessUtils()
+  {
+  }
   ProcessUtils(rclcpp::Node::SharedPtr);
   void startROSControllers();
   void killROSControllers();
