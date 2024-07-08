@@ -1,0 +1,11 @@
+name: MoveIt Middleware Benchmark Github Action Test
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  moveit_middleware_benchmark_github_action_test:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
