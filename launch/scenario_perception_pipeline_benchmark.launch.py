@@ -1,6 +1,6 @@
 import os
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, Shutdown
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch.conditions import IfCondition
 from launch_ros.actions import Node
@@ -132,6 +132,7 @@ def generate_launch_description():
             {"use_sim_time": True},
             {"selected_test_case_index": 1},
         ],
+        on_exit=Shutdown(),
     )
 
     return LaunchDescription(
