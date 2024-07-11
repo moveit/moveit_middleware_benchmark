@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v3
       - name: add to safe directory
         run: |
-          git config --global --add safe.directory /__w/dummy_ci/dummy_ci
+          git config --global --add safe.directory /__w/moveit_middleware_benchmark/moveit_middleware_benchmark
       - name: push perception benchmark results to github pages
         uses: benchmark-action/github-action-benchmark@v1
         with:
