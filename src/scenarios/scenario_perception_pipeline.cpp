@@ -104,6 +104,13 @@ void ScenarioPerceptionPipelineFixture::SetUp(::benchmark::State& /*state*/)
 
 void ScenarioPerceptionPipelineFixture::TearDown(::benchmark::State& /*state*/)
 {
+  // Reset ros2 node shared pointers and their service, subscriber,
+  // and publisher shared ptrs etc. before rclcpp::shutdown is not run.
+  // Because move_group_interface includes private node. Additionally,
+  // Some destructors can be run once process finishes and as soon as
+  // rclcpp::shutdown() finishes its own job.
+  move_group_interface_ptr_.reset();
+  node_.reset();
 }
 
 void ScenarioPerceptionPipelineFixture::createTestCases()
