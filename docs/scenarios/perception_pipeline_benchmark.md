@@ -2,17 +2,20 @@
 
 Firstly, source your ros version. It's suggested to test with rolling version of ROS.
 
-For instance, to test with rmw_zenoh, start to zenoh router using following command
+For instance, to test with rmw_zenoh, start to zenoh router using following command in the terminal.
 ```sh
 # go to your workspace
 cd ws
 # Be sure that ros2 daemon is killed.
 pkill -9 -f ros && ros2 daemon stop
 # Then start zenoh router
+source /opt/ros/rolling/setup.bash
+source install/setup.bash
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
 ros2 run rmw_zenoh_cpp rmw_zenohd
 ```
 
-Select your rmw_implementation as `rmw_zenoh_cpp` and run the perception benchmark launch file.
+Select your rmw_implementation as `rmw_zenoh_cpp` and run the perception benchmark launch file in the another terminal.
 ```sh
 # go to your workspace
 cd ws
