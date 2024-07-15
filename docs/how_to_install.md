@@ -23,3 +23,5 @@ cd ws
 sudo apt update && rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
 colcon build --mixin release
 ```
+
+To learn how to run these demos in this package, go to [How To Run](./how_to_run.md).
