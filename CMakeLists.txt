@@ -14,6 +14,7 @@ find_package(dynmsg REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(yaml-cpp REQUIRED)
+find_package(std_msgs REQUIRED)
 
 add_executable(
   scenario_perception_pipeline_benchmark_main
@@ -39,6 +40,37 @@ target_link_libraries(scenario_perception_pipeline_benchmark_main
                       PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
 
 install(TARGETS scenario_perception_pipeline_benchmark_main
+        DESTINATION lib/moveit_middleware_benchmark)
+
+install(DIRECTORY launch config DESTINATION share/moveit_middleware_benchmark)
+
+# ---------------------------------
+
+add_executable(
+  scenario_basic_subscription_benchmark_main
+  src/scenario_basic_subscription_benchmark_main.cpp
+  src/scenarios/scenario_basic_subscription.cpp)
+
+ament_target_dependencies(
+  scenario_basic_subscription_benchmark_main
+  PUBLIC
+  "moveit_ros_planning_interface"
+  "rclcpp"
+  "benchmark"
+  "dynmsg"
+  "std_msgs"
+  "yaml-cpp")
+
+target_include_directories(
+  scenario_basic_subscription_benchmark_main
+  PUBLIC $<INSTALL_INTERFACE:include>
+         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+
+target_link_libraries(scenario_basic_subscription_benchmark_main
+                      PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
+
+install(TARGETS scenario_perception_pipeline_benchmark_main
+                scenario_basic_subscription_benchmark_main
         DESTINATION lib/moveit_middleware_benchmark)
 
 install(DIRECTORY launch config DESTINATION share/moveit_middleware_benchmark)
