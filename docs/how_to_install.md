@@ -1,7 +1,7 @@
 ## How To Install
 
 
-Firstly, setup the dependencies of moveit_middleware_benchmark repositories. It's suggested to test with rolling version of ROS.
+Firstly, setup and build the moveit_middleware_benchmark including all source dependencies. This assumes that ROS Rolling is being used, but other ROS distros should work as well. Additionally, rmw_zenoh just supports `ROS Iron`, `ROS Jazzy` and `ROS Rolling`.
 ```sh
 # install colcon extensions
 source /opt/ros/rolling/setup.bash
