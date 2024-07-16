@@ -1,0 +1,171 @@
+# test cases stored in the nav_msgs/msg/Path
+test_cases:
+  # the first test case in type of nav_msgs/msg/Path,
+  # This test case can be selected in scenario_perception_pipeline_benchmark_main node
+  # by passing selected_test_case_index argument as 0
+  - poses:
+    # one of the pose in the `poses` field of nav_msgs/msg/Path
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+  # the second test case in type of nav_msgs/msg/Path
+  # This test case can be selected in scenario_perception_pipeline_benchmark_main node
+  # by passing selected_test_case_index argument as 0
+  # When you select this test case, robot firstly tries to go the first pose.
+  # After going to first pose, robot tries to go second pose. Then robot tries
+  # to go the first pose again. Robot tries to go between two poses 10 times.
+  # (In totally, robot has 20 goal poses)
+  # To give more goal pose increases the measurement reliability of middleware effects.
+  # Because sampling based planner selection affects the benchmark measurements negatively.
+  - poses:
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: 0.5
+          z: 0.5
+        orientation:
+          w : 1.0
+    - pose:
+        position:
+          x: 0.5
+          y: -0.5
+          z: 0.7
+        orientation:
+          w: 1.0
