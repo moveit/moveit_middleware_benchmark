@@ -39,27 +39,14 @@ target_include_directories(
 target_link_libraries(scenario_perception_pipeline_benchmark_main
                       PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
 
-install(TARGETS scenario_perception_pipeline_benchmark_main
-        DESTINATION lib/moveit_middleware_benchmark)
-
-install(DIRECTORY launch config DESTINATION share/moveit_middleware_benchmark)
-
-# ---------------------------------
-
 add_executable(
   scenario_basic_subscription_benchmark_main
   src/scenario_basic_subscription_benchmark_main.cpp
   src/scenarios/scenario_basic_subscription.cpp)
 
 ament_target_dependencies(
-  scenario_basic_subscription_benchmark_main
-  PUBLIC
-  "moveit_ros_planning_interface"
-  "rclcpp"
-  "benchmark"
-  "dynmsg"
-  "std_msgs"
-  "yaml-cpp")
+  scenario_basic_subscription_benchmark_main PUBLIC
+  "moveit_ros_planning_interface" "rclcpp" "benchmark" "std_msgs")
 
 target_include_directories(
   scenario_basic_subscription_benchmark_main
