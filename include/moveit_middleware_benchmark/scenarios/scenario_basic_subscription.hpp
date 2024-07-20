@@ -34,7 +34,7 @@
 
 /* Author: Cihat Kurtuluş Altıparmak
    Description: Benchmarking module to compare the effects of middlewares
-   against perception pipeline
+   against topic subscription and publishing
  */
 
 #pragma once
@@ -42,21 +42,9 @@
 #include <rclcpp/rclcpp.hpp>
 #include <benchmark/benchmark.h>
 #include <memory>
-
 #include <std_msgs/msg/string.hpp>
-#include <dynmsg/msg_parser.hpp>
-#include <dynmsg/typesupport.hpp>
-#include <dynmsg/yaml_utils.hpp>
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
-
-namespace
-{
-const std::string PLANNING_GROUP = "panda_arm";
-const std::string PACKAGE_SHARE_DIRECTORY = ament_index_cpp::get_package_share_directory("moveit_middleware_benchmark");
-const std::string TEST_CASES_YAML_FILE =
-    PACKAGE_SHARE_DIRECTORY + "/config/scenario_perception_pipeline_test_cases.yaml";
-}  // namespace
 
 namespace moveit
 {
@@ -75,6 +63,8 @@ private:
   rclcpp::Node::SharedPtr node_;
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
   volatile int received_topic_number_;
+  std::string benchmarked_topic_name_;
+  int benchmarked_topic_hz_;
 };
 
 class ScenarioBasicSubPubFixture : public benchmark::Fixture

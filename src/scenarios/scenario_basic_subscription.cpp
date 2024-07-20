@@ -34,7 +34,7 @@
 
 /* Author: Cihat Kurtuluş Altıparmak
    Description: Benchmarking module to compare the effects of middlewares
-   against perception pipeline
+   against topic subscription and publishing
  */
 
 #include "moveit_middleware_benchmark/scenarios/scenario_basic_subscription.hpp"
@@ -46,20 +46,27 @@ namespace middleware_benchmark
 
 ScenarioBasicSubPub::ScenarioBasicSubPub(rclcpp::Node::SharedPtr node) : node_(node)
 {
-  sub_ = node_->create_subscription<std_msgs::msg::String>(
-      "/benchmarked_topic1", 10, std::bind(&ScenarioBasicSubPub::subCallback, this, std::placeholders::_1));
   received_topic_number_ = 0;
+  node_->get_parameter("benchmarked_topic_name", benchmarked_topic_name_);
+  node_->get_parameter("benchmarked_topic_hz", benchmarked_topic_hz_);
 }
 
 void ScenarioBasicSubPub::runTestCase(const int& max_received_topic_number)
 {
-  rclcpp::Rate rate(10);
+  RCLCPP_INFO(node_->get_logger(), "Subscribing to topic : %s with hz %d", benchmarked_topic_name_.c_str(),
+              benchmarked_topic_hz_);
 
-  while (received_topic_number_ < max_received_topic_number)
-  {
-    // RCLCPP_INFO(node_->get_logger(), "deneme %d %d", received_topic_number_, max_received_topic_number);
-  }
-  RCLCPP_INFO(node_->get_logger(), "Im out!");
+  sub_ = node_->create_subscription<std_msgs::msg::String>(
+      benchmarked_topic_name_, 10, std::bind(&ScenarioBasicSubPub::subCallback, this, std::placeholders::_1));
+
+  RCLCPP_INFO(node_->get_logger(),
+              "Successfully subscribed to topic %s with hz %d! When received msg number is bigger than %d, benchmark "
+              "will be finished!",
+              benchmarked_topic_name_.c_str(), benchmarked_topic_hz_, max_received_topic_number);
+
+  while (received_topic_number_ < max_received_topic_number) {}
+
+  RCLCPP_INFO(node_->get_logger(), "Benchmarked test case is finished!");
 }
 
 void ScenarioBasicSubPub::subCallback(std_msgs::msg::String::SharedPtr msg)
@@ -78,7 +85,6 @@ void ScenarioBasicSubPubFixture::SetUp(::benchmark::State& /*state*/)
     node_ = std::make_shared<rclcpp::Node>("test_scenario_basic_sub_pub",
                                            rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true));
 
-    // max_receiving_topic_number_ = 1000;
     node_->get_parameter("max_receiving_topic_number", max_receiving_topic_number_);
 
     executor_ = std::make_shared<rclcpp::executors::SingleThreadedExecutor>();
