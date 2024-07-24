@@ -1,0 +1,36 @@
+name: Run MoveIt Middleware Benchmarks and Push Results
+
+on: [push]
+
+jobs:
+  run_middleware_benchmarks:
+    name: run_benchmarks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      deployments: write
+    container:
+      image: ghcr.io/cihataltiparmak/moveit_middleware_benchmark:latest
+    steps:
+      - name: run perception benchmark
+        run: |
+          cd /ws
+          . /opt/ros/rolling/setup.sh
+          . install/setup.sh
+          ros2 launch moveit_middleware_benchmark scenario_perception_pipeline_benchmark.launch.py
+      - name: clone repo
+        uses: actions/checkout@v3
+      - name: add to safe directory
+        run: |
+          git config --global --add safe.directory /__w/moveit_middleware_benchmark/moveit_middleware_benchmark
+      - name: push perception benchmark results to github pages
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: Movet Middleware Benchmark Project Perception Pipeline Benchmark
+          tool: 'googlecpp'
+          output-file-path: /ws/middleware_benchmark_results.json
+          # Access token to deploy GitHub Pages branch
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Push and deploy GitHub pages branch automatically
+          auto-push: true
+          gh-pages-branch: "gh-pages"

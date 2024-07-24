@@ -1,0 +1,6 @@
+name: 'MoveIt Middleware Benchmarks'
+description: 'Github Action for Middleware Benchmark Tool of MoveIt2'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
