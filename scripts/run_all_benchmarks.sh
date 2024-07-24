@@ -4,8 +4,8 @@ helpFunction()
    echo ""
    echo "Usage: $0 -i initial_script -m middleware_name -d benchmark_results_directory"
    echo -i "\t-i initial_script to run once all benchmarks are started"
-   echo -e "\t-m selected middleware to benchmark"
-   echo -e "\t-c the directory the benchmark results is saved"
+   echo -m "\t-m selected middleware to benchmark"
+   echo -d "\t-d the directory the benchmark results is saved"
    exit 1 # Exit script after printing help
 }
 
@@ -30,12 +30,14 @@ echo "middleware name is $middleware_name"
 echo "benchmark results directory is $benchmark_results_directory"
 
 echo "Benchmarking is starting!"
-echo "Starting initial sctipts before bechmarks run!"
+echo "Starting initial scripts before benchmarks run!"
 sh "$initial_script"
 echo "Initial script has finished! Now starting to benchmark middleware with scenarios!"
 
 # ros2 daemon stop
 # ros2 launch moveit_middleware_benchmark scenario_basic_service_client_benchmark.launch.py benchmark_command_args:="--benchmark_out=middleware_bechmark_results.json --benchmark_out_format=json"
 
-# ros2 daemon stop
-# ros2 launch moveit_middleware_benchmark scenario_perception_pipeline_benchmark.launch.py benchmark_command_args:="--benchmark_out=middleware_bechmark_results.json --benchmark_out_format=json"
+ros2 daemon stop
+export RMW_IMPLEMENTATION=${middleware_name}
+mkdir ${benchmark_results_directory}/scenario_perception_pipeline -p
+ros2 launch moveit_middleware_benchmark scenario_perception_pipeline_benchmark.launch.py benchmark_command_args:="--benchmark_out=${benchmark_results_directory}/scenario_perception_pipeline/${middleware_name}.json --benchmark_out_format=json" selected_test_case_index:=1
