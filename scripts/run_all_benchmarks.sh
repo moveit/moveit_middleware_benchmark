@@ -34,10 +34,12 @@ echo "Starting initial scripts before benchmarks run!"
 sh "$initial_script"
 echo "Initial script has finished! Now starting to benchmark middleware with scenarios!"
 
-# ros2 daemon stop
-# ros2 launch moveit_middleware_benchmark scenario_basic_service_client_benchmark.launch.py benchmark_command_args:="--benchmark_out=middleware_bechmark_results.json --benchmark_out_format=json"
-
-ros2 daemon stop
 export RMW_IMPLEMENTATION=${middleware_name}
+
+mkdir ${benchmark_results_directory}/scenario_basic_service_client -p
+ros2 daemon stop
+ros2 launch moveit_middleware_benchmark scenario_basic_service_client_benchmark.launch.py benchmark_command_args:="--benchmark_out=${benchmark_results_directory}/scenario_basic_service_client/${middleware_name}.json --benchmark_out_format=json"
+
 mkdir ${benchmark_results_directory}/scenario_perception_pipeline -p
+ros2 daemon stop
 ros2 launch moveit_middleware_benchmark scenario_perception_pipeline_benchmark.launch.py benchmark_command_args:="--benchmark_out=${benchmark_results_directory}/scenario_perception_pipeline/${middleware_name}.json --benchmark_out_format=json" selected_test_case_index:=1
