@@ -7,8 +7,8 @@ RUN mkdir ws/src -p
 
 RUN . /opt/ros/rolling/setup.sh && \
     cd ws/src && \
-    git clone https://github.com/CihatAltiparmak/moveit_middleware_benchmark.git && \
-    vcs import < moveit_middleware_benchmark/moveit_middleware_benchmark.repos --recursive
+    git clone https://github.com/DarkusAlphaHydranoid/moveit_middleware_benchmark_experimental.git && \
+    vcs import < moveit_middleware_benchmark_experimental/moveit_middleware_benchmark.repos --recursive
 
 RUN . /opt/ros/rolling/setup.sh && \
     cd ws && \
