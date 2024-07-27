@@ -56,8 +56,15 @@ namespace middleware_benchmark
 class ScenarioBasicServiceClient
 {
 public:
+  /** \brief Constructor to send request by client to add_two_ints_server which is one
+   * of the example of ros2/demos package
+   *  \param [in] node The ros node for sending request and wait response from server
+   */
   ScenarioBasicServiceClient(rclcpp::Node::SharedPtr node);
 
+  /** \brief the method to send the requests \e sending_request_number times
+   * \param [in] sending_request_number the number for how many request is sent by client
+   */
   void runTestCase(const int& sending_request_number);
 
 private:
@@ -70,12 +77,19 @@ class ScenarioBasicServiceClientFixture : public benchmark::Fixture
 public:
   ScenarioBasicServiceClientFixture();
 
+  /** \brief This method runs once each benchmark starts
+   *  \param [in] state
+   */
   void SetUp(::benchmark::State& /*state*/);
 
+  /** \brief This method runs as soon as each benchmark finishes
+   *  \param [in] state
+   */
   void TearDown(::benchmark::State& /*state*/);
 
 protected:
   rclcpp::Node::SharedPtr node_;
+  /* The number to send request to server */
   int sending_request_number_;
 };
 
