@@ -3,8 +3,8 @@ name: Run MoveIt Middleware Benchmarks
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  run_benchmarks_for_rmw_fastrtps:
-    name: run_benchmarks_for_rmw_fastrtps
+  run_all_benchmarks:
+    name: run_all_benchmarks
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -12,19 +12,24 @@ jobs:
     container:
       image: ghcr.io/darkusalphahydranoid/moveit_middleware_benchmark_experimental:latest
     steps:
-      - name: run perception benchmark
+      - name: run benchmarks for rmw_fastrtps
         run: |
           cd /root/ws_moveit
           . /opt/ros/rolling/setup.sh
           . install/setup.sh
           sh src/moveit_middleware_benchmark_experimental/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark_experimental/middleware_configurations/rmw_fastrtps/config_rmw_fastrtps.sh -d /benchmark_results -m rmw_fastrtps_cpp
-          
+      - name: run benchmarks for rmw_cyclonedds
+        run: |
+          cd /root/ws_moveit
+          . /opt/ros/rolling/setup.sh
+          . install/setup.sh
+          sh src/moveit_middleware_benchmark_experimental/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark_experimental/middleware_configurations/rmw_cyclonedds/config_rmw_cyclonedds.sh -d /benchmark_results -m rmw_cyclonedds_cpp
       - name: clone repo
         uses: actions/checkout@v3
       - name: add to safe directory
         run: |
           git config --global --add safe.directory /__w/moveit_middleware_benchmark_experimental/moveit_middleware_benchmark_experimental
-      - name: push perception benchmark results to github pages
+      - name: push perception benchmark results for rmw_fastrtps to github pages
         uses: benchmark-action/github-action-benchmark@v1
         with:
           name: Perception Pipeline Benchmark
@@ -36,7 +41,7 @@ jobs:
           auto-push: true
           gh-pages-branch: "gh-pages"
           benchmark-data-dir-path: "rmw_fastrtps"
-      - name: push simple service client benchmark results to github pages
+      - name: push simple service client benchmark results for rmw_fastrtps to github pages
         uses: benchmark-action/github-action-benchmark@v1
         with:
           name: Basic Service Client Benchmark
@@ -49,28 +54,7 @@ jobs:
           gh-pages-branch: "gh-pages"
           benchmark-data-dir-path: "rmw_fastrtps"
 
-  run_benchmarks_for_rmw_cyclonedds:
-    name: run_benchmarks_for_rmw_cyclonedds
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      deployments: write
-    container:
-      image: ghcr.io/darkusalphahydranoid/moveit_middleware_benchmark_experimental:latest
-    steps:
-      - name: run perception benchmark
-        run: |
-          cd /root/ws_moveit
-          . /opt/ros/rolling/setup.sh
-          . install/setup.sh
-          sh src/moveit_middleware_benchmark_experimental/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark_experimental/middleware_configurations/rmw_fastrtps/config_rmw_cyclonedds.sh -d /benchmark_results -m rmw_cyclonedds_cpp
-          
-      - name: clone repo
-        uses: actions/checkout@v3
-      - name: add to safe directory
-        run: |
-          git config --global --add safe.directory /__w/moveit_middleware_benchmark_experimental/moveit_middleware_benchmark_experimental
-      - name: push perception benchmark results to github pages
+      - name: push perception benchmark results for rmw_cyclonedds to github pages
         uses: benchmark-action/github-action-benchmark@v1
         with:
           name: Perception Pipeline Benchmark
@@ -82,7 +66,7 @@ jobs:
           auto-push: true
           gh-pages-branch: "gh-pages"
           benchmark-data-dir-path: "rmw_cyclonedds"
-      - name: push simple service client benchmark results to github pages
+      - name: push simple service client benchmark results for rme_cyclonedds to github pages
         uses: benchmark-action/github-action-benchmark@v1
         with:
           name: Basic Service Client Benchmark
