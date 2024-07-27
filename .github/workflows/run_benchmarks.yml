@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: run perception benchmark
         run: |
-          cd /ws
+          cd /root/ws_moveit
           . /opt/ros/rolling/setup.sh
           . install/setup.sh
           sh src/moveit_middleware_benchmark_experimental/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark_experimental/middleware_configurations/rmw_fastrtps/config_rmw_fastrtps.sh -d /benchmark_results -m rmw_fastrtps_cpp
@@ -60,7 +60,7 @@ jobs:
     steps:
       - name: run perception benchmark
         run: |
-          cd /ws
+          cd /root/ws_moveit
           . /opt/ros/rolling/setup.sh
           . install/setup.sh
           sh src/moveit_middleware_benchmark_experimental/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark_experimental/middleware_configurations/rmw_fastrtps/config_rmw_cyclonedds.sh -d /benchmark_results -m rmw_cyclonedds_cpp
