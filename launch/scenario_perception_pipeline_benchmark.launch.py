@@ -3,7 +3,7 @@ from launch import LaunchDescription
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch.conditions import IfCondition
 from launch_ros.actions import Node
-from ament_index_python.packages import get_package_share_directory
+from ament_index_python.packages import get_package_share_directory, get_package_prefix
 from launch.actions import (
     DeclareLaunchArgument,
     ExecuteProcess,
@@ -25,9 +25,13 @@ class ZenohRouterStarter:
 
     def start_router(self):
         try:
+            rmw_zenoh_cpp_router_executable_path = os.path.join(
+                get_package_prefix("rmw_zenoh_cpp"), "lib/rmw_zenoh_cpp/rmw_zenohd"
+            )
+
             self.tty_file_descriptor = open("/dev/tty")
             self.zenoh_router_sub_process = subprocess.Popen(
-                ["./install/rmw_zenoh_cpp/lib/rmw_zenoh_cpp/rmw_zenohd"],
+                [rmw_zenoh_cpp_router_executable_path],
                 stdin=self.tty_file_descriptor,
             )
         except Exception as err:
