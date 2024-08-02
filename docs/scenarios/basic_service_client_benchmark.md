@@ -1,6 +1,6 @@
 ## How To Run Basic Service Client Benchmark
 
-Firstly, source your ros version. It's suggested to test with rolling version of ROS.
+Firstly, source your ros version. It's suggested to test with rolling version of ROS 2.
 
 For instance, to test with rmw_zenoh, start to zenoh router using following command in the terminal.
 ```sh
