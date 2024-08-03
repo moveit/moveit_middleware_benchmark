@@ -56,8 +56,7 @@ namespace middleware_benchmark
 class ScenarioBasicServiceClient
 {
 public:
-  /** \brief Constructor to send request by client to add_two_ints_server which is one
-   * of the example of ros2/demos package
+  /** \brief Constructor
    *  \param [in] node The ros node for sending request and wait response from server
    */
   ScenarioBasicServiceClient(rclcpp::Node::SharedPtr node);
