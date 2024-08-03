@@ -8,22 +8,24 @@ To run all benchmarks, just select your middleware implementation and go ahead w
 cd ws
 source /opt/ros/rolling/setup.sh
 source install/setup.sh
-# select your middleware
-export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_cyclonedds/config_rmw_cyclonedds.sh -d /benchmark_results -m rmw_cyclonedds_cpp
+# go to moveit_middleware_benchmark package's directory
+cd src/moveit_middleware_benchmark
+# conduct all benchmarks
+sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_cyclonedds/config.sh -d /benchmark_results
 ```
 
 Let's explain all operations at `run_all_benchmarks.sh`.
 
 #### selection of initial script
 ```
--i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_cyclonedds/config_rmw_cyclonedds.sh
+-i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_cyclonedds/config.sh
 ```
 
 This argument is for selecting the initial scripts to be run. In this repository, These initial scripts is used for configuring middleware so that middleware is used more effectively. For example, you can use the initial script to configure TCP settings for rmw_zenoh like below.
 
 ```shell
 echo "The configurations for rmw_zenoh_cpp is started!"
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
 sudo sysctl -w "net.ipv4.tcp_rmem=4096 4096 4096"
 sudo sysctl -w "net.ipv4.tcp_wmem=4096 4096 4096"
 sudo sysctl -w "net.ipv4.tcp_mem=4096 4096 4096"
@@ -48,13 +50,6 @@ benchmark_results/
     ├── rmw_fastrtps_cpp.json
     └── rmw_zenoh_cpp.json
 ```
-
-#### middleware selection
-```
--m rmw_cyclonedds_cpp
-```
-
-This argument is important for both saving the benchmark results correctly and run `export RMW_IMPLEMENTATION=...` command correctly.
 
 ## Plot Visualization of Benchmark Results
 
