@@ -33,8 +33,8 @@ echo "Initial script has finished! Now starting to benchmark middleware with sce
 
 mkdir ${benchmark_results_directory}/scenario_basic_service_client -p
 ros2 daemon stop
-ros2 launch moveit_middleware_benchmark scenario_basic_service_client_benchmark.launch.py benchmark_command_args:="--benchmark_out=${benchmark_results_directory}/scenario_basic_service_client/${RMW_IMPLEMENTATION}.json --benchmark_out_format=json"
+ros2 launch moveit_middleware_benchmark scenario_basic_service_client_benchmark.launch.py benchmark_command_args:="--benchmark_out=${benchmark_results_directory}/scenario_basic_service_client/${RMW_IMPLEMENTATION}.json --benchmark_out_format=json --benchmark_repetitions=6"
 
 mkdir ${benchmark_results_directory}/scenario_perception_pipeline -p
 ros2 daemon stop
-ros2 launch moveit_middleware_benchmark scenario_perception_pipeline_benchmark.launch.py benchmark_command_args:="--benchmark_out=${benchmark_results_directory}/scenario_perception_pipeline/${RMW_IMPLEMENTATION}.json --benchmark_out_format=json" selected_test_case_index:=0
+ros2 launch moveit_middleware_benchmark scenario_perception_pipeline_benchmark.launch.py benchmark_command_args:="--benchmark_out=${benchmark_results_directory}/scenario_perception_pipeline/${RMW_IMPLEMENTATION}.json --benchmark_out_format=json --benchmark_repetitions=6"
