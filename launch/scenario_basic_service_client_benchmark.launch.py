@@ -21,9 +21,10 @@ def launch_setup(context, *args, **kwargs):
         context.perform_substitution(LaunchConfiguration("sending_request_number"))
     )
 
-    add_two_ints_server_node = ExecuteProcess(
-        cmd=[["ros2 run demo_nodes_cpp add_two_ints_server"]],
-        shell=True,
+    add_two_ints_server_node = Node(
+        name="add_two_ints_server",
+        package="demo_nodes_cpp",
+        executable="add_two_ints_server",
     )
 
     benchmark_main_node = Node(
