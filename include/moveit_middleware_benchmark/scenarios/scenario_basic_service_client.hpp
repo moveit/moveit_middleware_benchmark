@@ -59,7 +59,7 @@ public:
   /** \brief Constructor
    *  \param [in] node The ros node for sending request and wait response from server
    */
-  ScenarioBasicServiceClient(rclcpp::Node::SharedPtr node);
+  ScenarioBasicServiceClient(const rclcpp::Node::SharedPtr& node);
 
   /** \brief the method to send the requests \e sending_request_number times
    * \param [in] sending_request_number the number for how many request is sent by client

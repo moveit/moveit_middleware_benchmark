@@ -46,7 +46,7 @@ namespace middleware_benchmark
 
 using namespace std::chrono_literals;
 
-ScenarioBasicServiceClient::ScenarioBasicServiceClient(rclcpp::Node::SharedPtr node) : node_(node)
+ScenarioBasicServiceClient::ScenarioBasicServiceClient(const rclcpp::Node::SharedPtr& node) : node_(node)
 {
   client_ = node_->create_client<example_interfaces::srv::AddTwoInts>("add_two_ints");
 
