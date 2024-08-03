@@ -28,7 +28,7 @@ echo "benchmark results directory is $benchmark_results_directory"
 
 echo "Benchmarking is starting!"
 echo "Starting initial scripts before benchmarks run!"
-sh "$initial_script"
+. "$initial_script"
 echo "Initial script has finished! Now starting to benchmark middleware with scenarios!"
 
 mkdir ${benchmark_results_directory}/scenario_basic_service_client -p

@@ -48,7 +48,7 @@ def get_middleware_dataset_for_scenario(scenario_name):
     return middleware_datasets
 
 
-def plot_dataset_of_scenario(plt, middleware_datasets):
+def plot_dataset_of_scenario(plt, scenario_name, middleware_datasets):
     labels = []
     colors = []
     datasets = []
@@ -59,7 +59,9 @@ def plot_dataset_of_scenario(plt, middleware_datasets):
         datasets.append(x["dataset"])
 
     fig, ax = plt.subplots()
+    ax.set_title(scenario_name)
     ax.set_ylabel("real time (ns)")
+    ax.set_xlabel("middlewares")
 
     bplot = ax.boxplot(datasets, patch_artist=True, tick_labels=labels)
 
@@ -70,6 +72,6 @@ def plot_dataset_of_scenario(plt, middleware_datasets):
 
 for scenario_name in os.listdir(BENCHMARK_RESULTS_DIR):
     middleware_datasets = get_middleware_dataset_for_scenario(scenario_name)
-    plot_dataset_of_scenario(plt, middleware_datasets)
+    plot_dataset_of_scenario(plt, scenario_name, middleware_datasets)
 
 plt.show()
