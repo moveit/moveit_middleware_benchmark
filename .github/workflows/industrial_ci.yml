@@ -6,6 +6,7 @@ jobs:
   industrial_ci:
     name: ROS ${{ matrix.ROS_DISTRO }} (${{ matrix.ROS_REPO }})
     strategy:
+      fail-fast: false
       matrix:
         ROS_DISTRO: [rolling]
         ROS_REPO: [testing, main]

@@ -6,6 +6,8 @@ jobs:
   run_middleware_benchmarks:
     name: run_benchmarks
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
     permissions:
       contents: write
       deployments: write
