@@ -1,5 +1,5 @@
 ## Run All Benchmarks
-If you haven't taken a look at [How To Install](how_to_install.md) section, please firstly start with [How To Install](how_to_install.md) Because it's assumed that you applied [How To Install](how_to_install.md) section in this section.
+Before running the following benchmarks, please read and apply the instructions outlined in the [How To Install](how_to_install.md) section for providing the necessary requirements.
 
 To run all benchmarks, just select your middleware implementation and go ahead with `run_all_benchmarks.sh` bash script. This command initially will run the script you chose. In this example, it's used the default config scripts which the necessary middleware configuration is applied. This property serves the functionality for the users to apply some custom configurations freely.
 
