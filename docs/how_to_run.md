@@ -21,7 +21,7 @@ Let's explain all operations at `run_all_benchmarks.sh`.
 -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_cyclonedds/config.sh
 ```
 
-This argument is for selecting the initial scripts to be run. In this repository, These initial scripts is used for configuring middleware so that middleware is used more effectively. For example, you can use the initial script to configure TCP settings for rmw_zenoh like below.
+This argument is for selecting the initial scripts to be run. These initial scripts are used for configuring middleware-specific settings for improved performance. For example, you can use the initial script to configure TCP settings for rmw_zenoh like below.
 
 ```shell
 echo "The configurations for rmw_zenoh_cpp is started!"
