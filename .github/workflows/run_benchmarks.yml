@@ -19,13 +19,13 @@ jobs:
           cd ${ROS_UNDERLAY}/..
           . /opt/ros/rolling/setup.sh
           . install/setup.sh
-          sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_fastrtps/config_rmw_fastrtps.sh -d /benchmark_results -m rmw_fastrtps_cpp
+          sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_fastrtps/config_rmw_fastrtps.sh -d /benchmark_results
       - name: run benchmarks for rmw_cyclonedds
         run: |
           cd ${ROS_UNDERLAY}/..
           . /opt/ros/rolling/setup.sh
           . install/setup.sh
-          sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_cyclonedds/config_rmw_cyclonedds.sh -d /benchmark_results -m rmw_cyclonedds_cpp
+          sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_cyclonedds/config_rmw_cyclonedds.sh -d /benchmark_results
       - name: clone repo
         uses: actions/checkout@v3
       - name: add to safe directory
