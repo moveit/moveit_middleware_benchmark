@@ -45,10 +45,6 @@
 
 #include "moveit_middleware_benchmark/scenarios/moveit_task_constructor/pick_place_task.hpp"
 
-namespace
-{
-}  // namespace
-
 namespace moveit
 {
 namespace middleware_benchmark
@@ -57,15 +53,33 @@ namespace middleware_benchmark
 class ScenarioMoveItTaskConstructor
 {
 public:
+  /** \brief Firstly, prepares the demo scene for pick-place actions
+   *  and then initializes the task which created by moveit_task_constructor,
+   *  \param [in] node The ros node
+   */
   ScenarioMoveItTaskConstructor(const rclcpp::Node::SharedPtr& node);
+
+  /** \brief Firstly, destroys the created demo scene in order to reprepare
+   *  the environment for pick-place actions
+   */
   ~ScenarioMoveItTaskConstructor();
 
+  /** \brief Starts to plan to in order to execute the task which
+   *  created by moveit_task_constructor and then if task planning is successful,
+   *  task plan is executed
+   */
   void runTestCase();
 
 private:
+  /* the interface to get needed parameters for pick-place demo*/
   std::shared_ptr<pick_place_task_demo::ParamListener> pick_place_task_param_listener_;
+
+  /* the gotten parameters in order to be used for pick-place demo*/
   pick_place_task_demo::Params pick_place_task_demo_parameters_;
+
+  /* The pick-place demo instance to process the executing and planning operations on robot*/
   std::shared_ptr<moveit_task_constructor_demo::PickPlaceTask> pick_place_task_;
+
   rclcpp::Node::SharedPtr node_;
 };
 
@@ -74,8 +88,14 @@ class ScenarioMoveItTaskConstructorFixture : public benchmark::Fixture
 public:
   ScenarioMoveItTaskConstructorFixture();
 
+  /** \brief This method runs once each benchmark starts
+   *  \param [in] state
+   */
   void SetUp(::benchmark::State& /*state*/);
 
+  /** \brief This method runs as soon as each benchmark finishes
+   *  \param [in] state
+   */
   void TearDown(::benchmark::State& /*state*/);
 
 protected:
