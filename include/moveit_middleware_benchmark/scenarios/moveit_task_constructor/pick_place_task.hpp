@@ -61,7 +61,8 @@
 
 #pragma once
 
-namespace moveit_task_constructor_demo {
+namespace moveit_task_constructor_demo
+{
 using namespace moveit::task_constructor;
 
 // prepare a demo environment from ROS parameters under node
@@ -73,18 +74,17 @@ void destroyDemoScene(const pick_place_task_demo::Params& params);
 class PickPlaceTask
 {
 public:
-	PickPlaceTask(const std::string& task_name);
-	~PickPlaceTask() = default;
+  PickPlaceTask(const std::string& task_name);
+  ~PickPlaceTask() = default;
 
-	bool init(const rclcpp::Node::SharedPtr& node, const pick_place_task_demo::Params& params);
+  bool init(const rclcpp::Node::SharedPtr& node, const pick_place_task_demo::Params& params);
 
-	bool plan(const std::size_t max_solutions);
+  bool plan(const std::size_t max_solutions);
 
-	bool execute();
+  bool execute();
 
 private:
-	std::string task_name_;
-	moveit::task_constructor::TaskPtr task_;
+  std::string task_name_;
+  moveit::task_constructor::TaskPtr task_;
 };
 }  // namespace moveit_task_constructor_demo
-

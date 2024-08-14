@@ -38,40 +38,21 @@ def launch_setup(context, *args, **kwargs):
             publish_robot_description=True, publish_robot_description_semantic=True
         )
         .trajectory_execution(file_path="config/gripper_moveit_controllers.yaml")
-        .planning_pipelines(
-            pipelines=["ompl"]
-        )
+        .planning_pipelines(pipelines=["ompl"])
         .to_moveit_configs()
     )
 
-    # RViz for DEBUGGING STUFFS
-    rviz_config_file = (
-        get_package_share_directory("moveit_task_constructor_demo") + "/config/mtc.rviz"
-    )
-    rviz_node = Node(
-        package="rviz2",
-        executable="rviz2",
-        name="rviz2",
-        output="log",
-        arguments=["-d", rviz_config_file],
-        parameters=[
-            moveit_config.robot_description,
-            moveit_config.robot_description_semantic,
-            moveit_config.robot_description_kinematics,
-            moveit_config.planning_pipelines,
-        ],
-    )
-
     # Load  ExecuteTaskSolutionCapability so we can execute found solutions in simulation
-    move_group_capabilities = {"capabilities": "move_group/ExecuteTaskSolutionCapability"}
+    move_group_capabilities = {
+        "capabilities": "move_group/ExecuteTaskSolutionCapability"
+    }
 
     # Start the actual move_group node/action server
     move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
-        parameters=[moveit_config.to_dict(),
-        move_group_capabilities],
+        parameters=[moveit_config.to_dict(), move_group_capabilities],
         arguments=["--ros-args", "--log-level", "info"],
     )
 
@@ -161,7 +142,6 @@ def launch_setup(context, *args, **kwargs):
         joint_state_broadcaster_spawner,
         panda_arm_controller_spawner,
         panda_hand_controller_spawner,
-        rviz_node,
         # for https://github.com/ros-controls/ros2_controllers/issues/981
         RegisterEventHandler(
             OnProcessExit(
@@ -182,7 +162,7 @@ def generate_launch_description():
 
     benchmark_command_args = DeclareLaunchArgument(
         "benchmark_command_args",
-        default_value="--benchmark_out=middleware_benchmark_results.json --benchmark_out_format=json --benchmark_repetitions=6",
+        default_value="--benchmark_out=middleware_benchmark_results.json --benchmark_out_format=json --benchmark_repetitions=20",
         description="Google Benchmark Tool Arguments",
     )
     declared_arguments.append(benchmark_command_args)
@@ -197,4 +177,3 @@ def generate_launch_description():
     return LaunchDescription(
         declared_arguments + [OpaqueFunction(function=launch_setup)]
     )
-

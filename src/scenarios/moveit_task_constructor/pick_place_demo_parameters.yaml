@@ -95,4 +95,3 @@ pick_place_task_demo:
     type: double
   lift_object_max_dist:
     type: double
-

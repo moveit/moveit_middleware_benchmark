@@ -43,12 +43,6 @@
 #include <benchmark/benchmark.h>
 #include <memory>
 
-#include <ament_index_cpp/get_package_share_directory.hpp>
-
-#include <moveit/moveit_cpp/moveit_cpp.h>
-#include <moveit/moveit_cpp/planning_component.h>
-#include <moveit/move_group_interface/move_group_interface.h>
-
 #include "moveit_middleware_benchmark/scenarios/moveit_task_constructor/pick_place_task.hpp"
 
 namespace
@@ -63,7 +57,7 @@ namespace middleware_benchmark
 class ScenarioMoveItTaskConstructor
 {
 public:
-  ScenarioMoveItTaskConstructor(const rclcpp::Node::SharedPtr & node);
+  ScenarioMoveItTaskConstructor(const rclcpp::Node::SharedPtr& node);
   ~ScenarioMoveItTaskConstructor();
 
   void runTestCase();
