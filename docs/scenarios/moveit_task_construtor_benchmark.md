@@ -37,7 +37,7 @@ ros2 launch moveit_middleware_benchmark scenario_moveit_task_constructor_benchma
 
 The main idea here is to setup demo scene for operating task, to do planning task followed by executing task. After all of that, it's destroyed demo scene to conduct the benchmark of same task more than once. Thus, The effect of middleware on pick-place task demo can be measured the elapsed time reliably.
 
-![caption](../videos/moveit_task_constructor_benchmark.webm)
+[moveit_task_constructor_benchmark.webm](https://gist.github.com/user-attachments/assets/c4848652-9522-4ccb-988d-3a80d1e5d23f)
 
 ## How to create test cases
 
