@@ -27,13 +27,13 @@ add_executable(
 ament_target_dependencies(
   scenario_perception_pipeline_benchmark_main
   PUBLIC
-  "moveit_ros_planning_interface"
-  "rclcpp"
-  "benchmark"
-  "dynmsg"
-  "nav_msgs"
-  "yaml-cpp"
-  "example_interfaces")
+  moveit_ros_planning_interface
+  rclcpp
+  benchmark
+  dynmsg
+  nav_msgs
+  yaml-cpp
+  example_interfaces)
 
 target_include_directories(
   scenario_perception_pipeline_benchmark_main
@@ -41,7 +41,7 @@ target_include_directories(
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
 target_link_libraries(scenario_perception_pipeline_benchmark_main
-                      PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
+                      PUBLIC benchmark::benchmark ${YAML_CPP_LIBRARIES})
 
 add_executable(
   scenario_basic_service_client_benchmark_main
@@ -51,11 +51,11 @@ add_executable(
 ament_target_dependencies(
   scenario_basic_service_client_benchmark_main
   PUBLIC
-  "moveit_ros_planning_interface"
-  "rclcpp"
-  "benchmark"
-  "std_msgs"
-  "example_interfaces")
+  moveit_ros_planning_interface
+  rclcpp
+  benchmark
+  std_msgs
+  example_interfaces)
 
 target_include_directories(
   scenario_basic_service_client_benchmark_main
