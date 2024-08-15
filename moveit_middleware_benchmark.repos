@@ -1,8 +1,4 @@
 repositories:
-  moveit_msgs:
-    type: git
-    url: https://github.com/moveit/moveit2.git
-    version: main
   moveit_resources:
     type: git
     url: https://github.com/moveit/moveit_resources.git
@@ -10,6 +6,14 @@ repositories:
   rmw_zenoh:
     type: git
     url: https://github.com/ros2/rmw_zenoh.git
+    version: rolling
+  rmw_cyclonedds:
+    type: git
+    url: https://github.com/ros2/rmw_cyclonedds.git
+    version: rolling
+  rmw_fastrtps:
+    type: git
+    url: https://github.com/ros2/rmw_fastrtps.git
     version: rolling
   dynamic_message_introspection:
     type: git

@@ -1,36 +1,82 @@
-name: Run MoveIt Middleware Benchmarks and Push Results
+name: Run MoveIt Middleware Benchmarks
 
-on: [push]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  run_middleware_benchmarks:
-    name: run_benchmarks
+  run_all_benchmarks:
+    name: run_all_benchmarks
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
     permissions:
       contents: write
       deployments: write
     container:
       image: ghcr.io/cihataltiparmak/moveit_middleware_benchmark:latest
     steps:
-      - name: run perception benchmark
+      - name: run benchmarks for rmw_fastrtps
         run: |
-          cd /ws
+          cd ${ROS_UNDERLAY}/..
           . /opt/ros/rolling/setup.sh
           . install/setup.sh
-          ros2 launch moveit_middleware_benchmark scenario_perception_pipeline_benchmark.launch.py
+          sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_fastrtps/config_rmw_fastrtps.sh -d /benchmark_results -m rmw_fastrtps_cpp
+      - name: run benchmarks for rmw_cyclonedds
+        run: |
+          cd ${ROS_UNDERLAY}/..
+          . /opt/ros/rolling/setup.sh
+          . install/setup.sh
+          sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_cyclonedds/config_rmw_cyclonedds.sh -d /benchmark_results -m rmw_cyclonedds_cpp
       - name: clone repo
         uses: actions/checkout@v3
       - name: add to safe directory
         run: |
           git config --global --add safe.directory /__w/moveit_middleware_benchmark/moveit_middleware_benchmark
-      - name: push perception benchmark results to github pages
+      - name: push perception benchmark results for rmw_fastrtps to github pages
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          name: Movet Middleware Benchmark Project Perception Pipeline Benchmark
+          name: Perception Pipeline Benchmark
           tool: 'googlecpp'
-          output-file-path: /ws/middleware_benchmark_results.json
+          output-file-path: /benchmark_results/scenario_perception_pipeline/rmw_fastrtps_cpp.json
           # Access token to deploy GitHub Pages branch
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Push and deploy GitHub pages branch automatically
           auto-push: true
           gh-pages-branch: "gh-pages"
+          benchmark-data-dir-path: "rmw_fastrtps"
+      - name: push simple service client benchmark results for rmw_fastrtps to github pages
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: Basic Service Client Benchmark
+          tool: 'googlecpp'
+          output-file-path: /benchmark_results/scenario_basic_service_client/rmw_fastrtps_cpp.json
+          # Access token to deploy GitHub Pages branch
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Push and deploy GitHub pages branch automatically
+          auto-push: true
+          gh-pages-branch: "gh-pages"
+          benchmark-data-dir-path: "rmw_fastrtps"
+
+      - name: push perception benchmark results for rmw_cyclonedds to github pages
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: Perception Pipeline Benchmark
+          tool: 'googlecpp'
+          output-file-path: /benchmark_results/scenario_perception_pipeline/rmw_cyclonedds_cpp.json
+          # Access token to deploy GitHub Pages branch
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Push and deploy GitHub pages branch automatically
+          auto-push: true
+          gh-pages-branch: "gh-pages"
+          benchmark-data-dir-path: "rmw_cyclonedds"
+      - name: push simple service client benchmark results for rme_cyclonedds to github pages
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: Basic Service Client Benchmark
+          tool: 'googlecpp'
+          output-file-path: /benchmark_results/scenario_basic_service_client/rmw_cyclonedds_cpp.json
+          # Access token to deploy GitHub Pages branch
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Push and deploy GitHub pages branch automatically
+          auto-push: true
+          gh-pages-branch: "gh-pages"
+          benchmark-data-dir-path: "rmw_cyclonedds"

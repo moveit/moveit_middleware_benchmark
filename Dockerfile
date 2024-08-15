@@ -1,4 +1,4 @@
-FROM ros:rolling
+FROM moveit/moveit2:rolling-source
 
 RUN apt-get update && \
     apt install wget -y
@@ -6,20 +6,17 @@ RUN apt-get update && \
 RUN mkdir ws/src -p
 
 RUN . /opt/ros/rolling/setup.sh && \
-    cd ws/src && \
-    git clone https://github.com/CihatAltiparmak/moveit_middleware_benchmark.git -b development && \
+    cd ${ROS_UNDERLAY}/../src && \
+    git clone https://github.com/CihatAltiparmak/moveit_middleware_benchmark.git && \
     vcs import < moveit_middleware_benchmark/moveit_middleware_benchmark.repos --recursive
 
-RUN cd ws/src && \
-    # git clone https://github.com/ros2/rmw_zenoh.git && \
-    git clone https://github.com/ros2/rmw_cyclonedds.git
-
 RUN . /opt/ros/rolling/setup.sh && \
-    cd ws && \
+    cd ${ROS_UNDERLAY}/.. && \
     rosdep update --rosdistro=$ROS_DISTRO && \
     apt-get update && \
+    apt upgrade -y && \
     rosdep install --from-paths src --ignore-src -r -y
 
 RUN . /opt/ros/rolling/setup.sh && \
-    cd ws && \
+    cd ${ROS_UNDERLAY}/.. && \
     colcon build --mixin release --packages-skip test_dynmsg dynmsg_demo
