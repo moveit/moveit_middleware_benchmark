@@ -63,7 +63,7 @@ target_include_directories(
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
 target_link_libraries(scenario_basic_service_client_benchmark_main
-                      PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
+                      PUBLIC benchmark::benchmark ${YAML_CPP_LIBRARIES})
 
 add_executable(
   scenario_moveit_task_constructor_benchmark_main
@@ -92,8 +92,7 @@ generate_parameter_library(
 
 target_link_libraries(
   scenario_moveit_task_constructor_benchmark_main
-  PUBLIC benchmark::benchmark ${YAML_CPP_LIBRARIES}
-         pick_place_demo_parameters)
+  PUBLIC benchmark::benchmark ${YAML_CPP_LIBRARIES} pick_place_demo_parameters)
 
 install(
   TARGETS scenario_perception_pipeline_benchmark_main
