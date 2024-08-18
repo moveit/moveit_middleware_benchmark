@@ -37,7 +37,7 @@
    against topic subscription and publishing
  */
 
-#include "moveit_middleware_benchmark/scenarios/scenario_basic_subscription.hpp"
+#include "moveit_middleware_benchmark/scenarios/basic_topic_sub_pub/scenario_basic_subscription.hpp"
 
 namespace moveit
 {
@@ -46,39 +46,55 @@ namespace middleware_benchmark
 
 ScenarioBasicSubPub::ScenarioBasicSubPub(rclcpp::Node::SharedPtr node) : node_(node)
 {
+  is_test_case_finished_ = false;
   received_topic_number_ = 0;
   node_->get_parameter("benchmarked_topic_name", benchmarked_topic_name_);
   node_->get_parameter("benchmarked_topic_hz", benchmarked_topic_hz_);
+  node_->get_parameter("max_received_topic_number", max_received_topic_number_);
 }
 
-void ScenarioBasicSubPub::runTestCase(const int& max_received_topic_number)
+void ScenarioBasicSubPub::runTestCase(benchmark::State& benchmark_state)
 {
+  is_test_case_finished_ = false;
+
   RCLCPP_INFO(node_->get_logger(), "Subscribing to topic : %s with hz %d", benchmarked_topic_name_.c_str(),
               benchmarked_topic_hz_);
 
-  sub_ = node_->create_subscription<std_msgs::msg::String>(
+  sub_ = node_->create_subscription<geometry_msgs::msg::PoseArray>(
       benchmarked_topic_name_, 10, std::bind(&ScenarioBasicSubPub::subCallback, this, std::placeholders::_1));
 
   RCLCPP_INFO(node_->get_logger(),
-              "Successfully subscribed to topic %s with hz %d! When received msg number is bigger than %d, benchmark "
+              "Successfully subscribed to topic %s with hz %d! When received msg number is bigger than %ld, benchmark "
               "will be finished!",
-              benchmarked_topic_name_.c_str(), benchmarked_topic_hz_, max_received_topic_number);
+              benchmarked_topic_name_.c_str(), benchmarked_topic_hz_, max_received_topic_number_);
 
-  while (received_topic_number_ < max_received_topic_number) {}
-
+  std::unique_lock lk(is_test_case_finished_mutex_);
+  test_case_cv_.wait(lk, [this](){return is_test_case_finished_;});
+  
+  benchmark_state.SetIterationTime(elapsed_time_.count());
   RCLCPP_INFO(node_->get_logger(), "Benchmarked test case is finished!");
 }
 
-void ScenarioBasicSubPub::subCallback(std_msgs::msg::String::SharedPtr msg)
+void ScenarioBasicSubPub::subCallback(geometry_msgs::msg::PoseArray::SharedPtr pose_array_msg)
 {
+  std::unique_lock lk(is_test_case_finished_mutex_);
   received_topic_number_++;
+
+  if (received_topic_number_ > max_received_topic_number_) {
+    is_test_case_finished_ = true;
+    lk.unlock();
+    test_case_cv_.notify_one();
+  } else {
+    auto msg_latency_time = (node_->now() - pose_array_msg->header.stamp).to_chrono<std::chrono::duration<double>>();
+    elapsed_time_ += msg_latency_time;
+  }
 }
 
 ScenarioBasicSubPubFixture::ScenarioBasicSubPubFixture()
 {
 }
 
-void ScenarioBasicSubPubFixture::SetUp(::benchmark::State& /*state*/)
+void ScenarioBasicSubPubFixture::SetUp(benchmark::State& /*state*/)
 {
   if (node_.use_count() == 0)
   {
@@ -93,7 +109,7 @@ void ScenarioBasicSubPubFixture::SetUp(::benchmark::State& /*state*/)
   }
 }
 
-void ScenarioBasicSubPubFixture::TearDown(::benchmark::State& /*state*/)
+void ScenarioBasicSubPubFixture::TearDown(benchmark::State& /*state*/)
 {
   // Reset ros2 node shared pointers and their service, subscriber,
   // and publisher shared ptrs etc. before rclcpp::shutdown is not run.
@@ -109,11 +125,11 @@ BENCHMARK_DEFINE_F(ScenarioBasicSubPubFixture, test_scenario_basic_sub_pub)(benc
   for (auto _ : st)
   {
     auto sc = ScenarioBasicSubPub(node_);
-    sc.runTestCase(max_receiving_topic_number_);
+    sc.runTestCase(st);
   }
 }
 
-BENCHMARK_REGISTER_F(ScenarioBasicSubPubFixture, test_scenario_basic_sub_pub);
+BENCHMARK_REGISTER_F(ScenarioBasicSubPubFixture, test_scenario_basic_sub_pub)->UseManualTime()->Unit(benchmark::kNanosecond);
 
 }  // namespace middleware_benchmark
 }  // namespace moveit

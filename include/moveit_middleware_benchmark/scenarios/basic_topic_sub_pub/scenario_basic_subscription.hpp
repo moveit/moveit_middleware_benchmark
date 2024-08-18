@@ -34,17 +34,61 @@
 
 /* Author: Cihat Kurtuluş Altıparmak
    Description: Benchmarking module to compare the effects of middlewares
-   against perception pipeline
+   against topic subscription and publishing
  */
 
-#include "moveit_middleware_benchmark/scenarios/basic_topic_sub_pub/scenario_basic_subscription.hpp"
+#pragma once
 
-int main(int argc, char** argv)
+#include <rclcpp/rclcpp.hpp>
+#include <benchmark/benchmark.h>
+#include <memory>
+#include <mutex>
+#include <geometry_msgs/msg/pose_array.hpp>
+
+#include <ament_index_cpp/get_package_share_directory.hpp>
+
+namespace moveit
 {
-  rclcpp::init(argc, argv);
-  benchmark::Initialize(&argc, argv);
-  benchmark::RunSpecifiedBenchmarks();
-  benchmark::Shutdown();
-  rclcpp::shutdown();
-  return 0;
-}
+namespace middleware_benchmark
+{
+
+class ScenarioBasicSubPub
+{
+public:
+  ScenarioBasicSubPub(rclcpp::Node::SharedPtr node);
+
+  void runTestCase(benchmark::State&);
+  void subCallback(geometry_msgs::msg::PoseArray::SharedPtr msg);
+
+private:
+  rclcpp::Node::SharedPtr node_;
+  rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr sub_;
+  size_t received_topic_number_;
+  size_t max_received_topic_number_;
+
+  std::string benchmarked_topic_name_;
+  int benchmarked_topic_hz_;
+  std::condition_variable test_case_cv_;
+  std::mutex is_test_case_finished_mutex_;
+  bool is_test_case_finished_;
+  std::chrono::duration<double> elapsed_time_;
+};
+
+class ScenarioBasicSubPubFixture : public benchmark::Fixture
+{
+public:
+  ScenarioBasicSubPubFixture();
+
+  void SetUp(::benchmark::State& /*state*/);
+
+  void TearDown(::benchmark::State& /*state*/);
+
+protected:
+  rclcpp::Node::SharedPtr node_;
+  std::shared_ptr<rclcpp::executors::SingleThreadedExecutor> executor_;
+  std::thread node_thread_;
+  int max_receiving_topic_number_;
+};
+
+}  // namespace middleware_benchmark
+}  // namespace moveit

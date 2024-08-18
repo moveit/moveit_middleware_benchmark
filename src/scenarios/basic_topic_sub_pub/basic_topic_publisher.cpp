@@ -33,55 +33,44 @@
  *********************************************************************/
 
 /* Author: Cihat Kurtuluş Altıparmak
-   Description: Benchmarking module to compare the effects of middlewares
-   against topic subscription and publishing
+   Description: Basic pose_array_msg topic publisher to measure the middleware 
+   effects in basic topic subscription-publishing scenario 
  */
 
-#pragma once
-
 #include <rclcpp/rclcpp.hpp>
-#include <benchmark/benchmark.h>
-#include <memory>
-#include <std_msgs/msg/string.hpp>
+#include <geometry_msgs/msg/pose_array.hpp>
 
-#include <ament_index_cpp/get_package_share_directory.hpp>
+int main(int argc, char ** argv) {
 
-namespace moveit
-{
-namespace middleware_benchmark
-{
+    size_t pose_array_size = 10;
+    double benchmarked_topic_hz = 10;
+    std::string benchmarked_topic_name = "/benchmarked_topic1";
 
-class ScenarioBasicSubPub
-{
-public:
-  ScenarioBasicSubPub(rclcpp::Node::SharedPtr node);
+    rclcpp::init(argc, argv);
 
-  void runTestCase(const int& publishing_topic_number);
-  void subCallback(std_msgs::msg::String::SharedPtr msg);
+    auto node = rclcpp::Node::make_shared("basic_topic_publisher");
 
-private:
-  rclcpp::Node::SharedPtr node_;
-  rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
-  volatile int received_topic_number_;
-  std::string benchmarked_topic_name_;
-  int benchmarked_topic_hz_;
-};
+    node->get_parameter("benchmarked_topic_hz", benchmarked_topic_hz);
+    node->get_parameter("benchmarked_topic_name", benchmarked_topic_name);
+    node->get_parameter("pose_array_size", pose_array_size);
 
-class ScenarioBasicSubPubFixture : public benchmark::Fixture
-{
-public:
-  ScenarioBasicSubPubFixture();
 
-  void SetUp(::benchmark::State& /*state*/);
+    auto topic_pub = node->create_publisher<geometry_msgs::msg::PoseArray>(benchmarked_topic_name, 10);
 
-  void TearDown(::benchmark::State& /*state*/);
+    geometry_msgs::msg::PoseArray sample_pose_array_msg;
+    sample_pose_array_msg.poses.resize(pose_array_size);
 
-protected:
-  rclcpp::Node::SharedPtr node_;
-  std::shared_ptr<rclcpp::executors::SingleThreadedExecutor> executor_;
-  std::thread node_thread_;
-  int max_receiving_topic_number_;
-};
+    rclcpp::Rate sleep_rate(benchmarked_topic_hz);
 
-}  // namespace middleware_benchmark
-}  // namespace moveit
+    while (rclcpp::ok()) {
+        // save the publishing date of message
+        sample_pose_array_msg.header.stamp = node->now();
+
+        // publish the message
+        topic_pub->publish(sample_pose_array_msg);
+
+        sleep_rate.sleep();
+    }
+
+    rclcpp::shutdown();
+}

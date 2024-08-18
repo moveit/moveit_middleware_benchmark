@@ -25,17 +25,24 @@ def launch_setup(context, *args, **kwargs):
         LaunchConfiguration("benchmarked_topic_name")
     )
 
-    max_receiving_topic_number = int(
-        context.perform_substitution(LaunchConfiguration("max_receiving_topic_number"))
+    max_received_topic_number = int(
+        context.perform_substitution(LaunchConfiguration("max_received_topic_number"))
     )
 
-    topic_publisher = ExecuteProcess(
-        cmd=[
-            [
-                f"ros2 topic pub -r {benchmarked_topic_hz} {benchmarked_topic_name} std_msgs/msg/String 'data : 1'",
-            ]
+    pose_array_size = int(
+        context.perform_substitution(LaunchConfiguration("pose_array_size"))
+    )
+
+    topic_publisher = Node(
+        name="topic_publisher",
+        package="moveit_middleware_benchmark",
+        executable="scenario_basic_subscription_basic_topic_publisher",
+        output="log",
+        parameters=[
+            {"pose_array_size": pose_array_size},
+            {"benchmarked_topic_name": benchmarked_topic_name},
+            {"benchmarked_topic_hz": benchmarked_topic_hz},
         ],
-        shell=True,
     )
 
     benchmark_main_node = Node(
@@ -45,7 +52,7 @@ def launch_setup(context, *args, **kwargs):
         output="both",
         arguments=benchmark_command_args,
         parameters=[
-            {"max_receiving_topic_number": max_receiving_topic_number},
+            {"max_received_topic_number": max_received_topic_number},
             {"benchmarked_topic_name": benchmarked_topic_name},
             {"benchmarked_topic_hz": benchmarked_topic_hz},
         ],
@@ -66,7 +73,7 @@ def generate_launch_description():
     declared_arguments.append(benchmark_command_args)
 
     benchmarked_topic_hz_arg = DeclareLaunchArgument(
-        "benchmarked_topic_hz", default_value="10000"
+        "benchmarked_topic_hz", default_value="10"
     )
     declared_arguments.append(benchmarked_topic_hz_arg)
 
@@ -75,10 +82,15 @@ def generate_launch_description():
     )
     declared_arguments.append(benchmarked_topic_name_arg)
 
-    max_receiving_topic_number_arg = DeclareLaunchArgument(
-        "max_receiving_topic_number", default_value="1000000"
+    max_received_topic_number_arg = DeclareLaunchArgument(
+        "max_received_topic_number", default_value="1000"
     )
-    declared_arguments.append(max_receiving_topic_number_arg)
+    declared_arguments.append(max_received_topic_number_arg)
+
+    pose_array_size_arg = DeclareLaunchArgument(
+        "pose_array_size", default_value="1000000"
+    )
+    declared_arguments.append(pose_array_size_arg)
 
     return LaunchDescription(
         declared_arguments + [OpaqueFunction(function=launch_setup)]
