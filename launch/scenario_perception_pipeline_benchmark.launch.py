@@ -17,6 +17,18 @@ from launch_ros.substitutions import FindPackageShare
 from moveit_configs_utils import MoveItConfigsBuilder
 import subprocess
 
+"""
+Zenoh router needs to use /dev/tty as stdin. We cannot set stdin in ExecuteProcess.
+The functionality of launch tool doesn't allow to set stdin, Even if we use
+shell=True parameter and set stdin using ros2 run rmw_zenoh_cpp rmw_zenoh < /dev/tty,
+launch closes process unsoundly, it somehow trigger neither the SIGTERM nor SIGINT.
+I could solve this using separate subprocess mechanism, which allows us to modify stdin of process directly.
+See my comment in this issue. ( https://github.com/ros2/rmw_zenoh/issues/206#issuecomment-2257292941 )
+
+TODO: (CihatAltiparmak) Remove this class when rmw_zenoh becomes runnable without starting router
+separately or when tty option is removed from router executable
+"""
+
 
 class ZenohRouterStarter:
     def __init__(self):
