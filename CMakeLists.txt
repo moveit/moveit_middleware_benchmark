@@ -94,10 +94,11 @@ target_include_directories(
 install(TARGETS scenario_basic_subscription_basic_topic_publisher
         DESTINATION lib/moveit_middleware_benchmark)
 
-install(TARGETS scenario_perception_pipeline_benchmark_main
-                scenario_basic_service_client_benchmark_main
-                scenario_basic_subscription_benchmark_main
-        DESTINATION lib/moveit_middleware_benchmark)
+install(
+  TARGETS scenario_perception_pipeline_benchmark_main
+          scenario_basic_service_client_benchmark_main
+          scenario_basic_subscription_benchmark_main
+  DESTINATION lib/moveit_middleware_benchmark)
 
 install(DIRECTORY launch config DESTINATION share/moveit_middleware_benchmark)
 

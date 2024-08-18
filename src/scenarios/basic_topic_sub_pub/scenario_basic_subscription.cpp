@@ -69,8 +69,8 @@ void ScenarioBasicSubPub::runTestCase(benchmark::State& benchmark_state)
               benchmarked_topic_name_.c_str(), benchmarked_topic_hz_, max_received_topic_number_);
 
   std::unique_lock lk(is_test_case_finished_mutex_);
-  test_case_cv_.wait(lk, [this](){return is_test_case_finished_;});
-  
+  test_case_cv_.wait(lk, [this]() { return is_test_case_finished_; });
+
   benchmark_state.SetIterationTime(elapsed_time_.count());
   RCLCPP_INFO(node_->get_logger(), "Benchmarked test case is finished!");
 }
@@ -80,11 +80,14 @@ void ScenarioBasicSubPub::subCallback(geometry_msgs::msg::PoseArray::SharedPtr p
   std::unique_lock lk(is_test_case_finished_mutex_);
   received_topic_number_++;
 
-  if (received_topic_number_ > max_received_topic_number_) {
+  if (received_topic_number_ > max_received_topic_number_)
+  {
     is_test_case_finished_ = true;
     lk.unlock();
     test_case_cv_.notify_one();
-  } else {
+  }
+  else
+  {
     auto msg_latency_time = (node_->now() - pose_array_msg->header.stamp).to_chrono<std::chrono::duration<double>>();
     elapsed_time_ += msg_latency_time;
   }
@@ -129,7 +132,9 @@ BENCHMARK_DEFINE_F(ScenarioBasicSubPubFixture, test_scenario_basic_sub_pub)(benc
   }
 }
 
-BENCHMARK_REGISTER_F(ScenarioBasicSubPubFixture, test_scenario_basic_sub_pub)->UseManualTime()->Unit(benchmark::kNanosecond);
+BENCHMARK_REGISTER_F(ScenarioBasicSubPubFixture, test_scenario_basic_sub_pub)
+    ->UseManualTime()
+    ->Unit(benchmark::kNanosecond);
 
 }  // namespace middleware_benchmark
 }  // namespace moveit
