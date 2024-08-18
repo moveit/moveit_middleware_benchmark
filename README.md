@@ -9,6 +9,7 @@ Under Construction
 This middleware benchmark tool aims to measure middleware effects on various scenarios like perception pipeline in MoveIt. There is a following list to see scenarios and how to measure the effects of middleware.
 
 * [Perception Pipeline](./docs/scenarios/perception_pipeline_benchmark.md)
+* [Basic Service Client Works](./docs/scenarios/basic_service_client_benchmark.md)
 
 ## Getting Started
 
