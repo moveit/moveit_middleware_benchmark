@@ -61,7 +61,7 @@ target_include_directories(
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
 target_link_libraries(scenario_basic_service_client_benchmark_main
-                      PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
+                      PUBLIC benchmark::benchmark ${YAML_CPP_LIBRARIES})
 
 add_executable(
   scenario_basic_subscription_benchmark_main
@@ -70,7 +70,7 @@ add_executable(
 
 ament_target_dependencies(
   scenario_basic_subscription_benchmark_main PUBLIC
-  "moveit_ros_planning_interface" "rclcpp" "benchmark" "std_msgs")
+  moveit_ros_planning_interface rclcpp benchmark std_msgs)
 
 target_include_directories(
   scenario_basic_subscription_benchmark_main
@@ -78,7 +78,7 @@ target_include_directories(
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
 target_link_libraries(scenario_basic_subscription_benchmark_main
-                      PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
+                      PUBLIC benchmark::benchmark ${YAML_CPP_LIBRARIES})
 
 add_executable(scenario_basic_subscription_basic_topic_publisher
                src/scenarios/basic_topic_sub_pub/basic_topic_publisher.cpp)
