@@ -10,7 +10,7 @@ This middleware benchmark tool aims to measure middleware effects on various sce
 
 * [Perception Pipeline](./docs/scenarios/perception_pipeline_benchmark.md)
 * [Basic Service Client Works](./docs/scenarios/basic_service_client_benchmark.md)
-* [Moveit Task Constructor Pick-Place Task](./docs/scenarios/moveit_task_construtor_benchmark.md)
+* [Moveit Task Constructor Pick-Place Task](./docs/scenarios/moveit_task_constructor_benchmark.md)
 
 ## Getting Started
 
