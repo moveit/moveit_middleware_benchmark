@@ -25,8 +25,8 @@ def launch_setup(context, *args, **kwargs):
         LaunchConfiguration("benchmarked_topic_name")
     )
 
-    max_received_topic_number = int(
-        context.perform_substitution(LaunchConfiguration("max_received_topic_number"))
+    max_received_message_number = int(
+        context.perform_substitution(LaunchConfiguration("max_received_message_number"))
     )
 
     pose_array_size = int(
@@ -52,7 +52,7 @@ def launch_setup(context, *args, **kwargs):
         output="both",
         arguments=benchmark_command_args,
         parameters=[
-            {"max_received_topic_number": max_received_topic_number},
+            {"max_received_message_number": max_received_message_number},
             {"benchmarked_topic_name": benchmarked_topic_name},
             {"benchmarked_topic_hz": benchmarked_topic_hz},
         ],
@@ -82,10 +82,10 @@ def generate_launch_description():
     )
     declared_arguments.append(benchmarked_topic_name_arg)
 
-    max_received_topic_number_arg = DeclareLaunchArgument(
-        "max_received_topic_number", default_value="1000"
+    max_received_message_number_arg = DeclareLaunchArgument(
+        "max_received_message_number", default_value="1000"
     )
-    declared_arguments.append(max_received_topic_number_arg)
+    declared_arguments.append(max_received_message_number_arg)
 
     pose_array_size_arg = DeclareLaunchArgument(
         "pose_array_size", default_value="1000000"

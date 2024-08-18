@@ -55,22 +55,45 @@ namespace middleware_benchmark
 class ScenarioBasicSubPub
 {
 public:
+  /** \brief Constructor
+   *  \param [in] node The ros node for subscribing the benchmarking topic
+   * and getting the necessary ROS params
+   */
   ScenarioBasicSubPub(rclcpp::Node::SharedPtr node);
 
-  void runTestCase(benchmark::State&);
+  /** \brief the method to measure the message latency
+   * by handling maximum \e max_received_message_number_ message
+   * \param [in] benchmark_state the google benchmark instance
+   * to save message latency to benchmark results
+   */
+  void runTestCase(benchmark::State& benchmark_state);
+
+  /** \brief the method to subscribe ROS message and add
+   * the message latencies to total elapsed time until
+   * \e max_received_message_number_ message is received
+   * \param [in] msg ROS message
+   */
   void subCallback(geometry_msgs::msg::PoseArray::SharedPtr msg);
 
 private:
   rclcpp::Node::SharedPtr node_;
   rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr sub_;
-  size_t received_topic_number_;
-  size_t max_received_topic_number_;
+  size_t received_message_number_;
 
+  /* max message number to be able to handle */
+  size_t max_received_message_number_;
+
+  /* topic name to subscribe determined topic */
   std::string benchmarked_topic_name_;
+
+  /* topic publishing hz */
   int benchmarked_topic_hz_;
+
   std::condition_variable test_case_cv_;
   std::mutex is_test_case_finished_mutex_;
   bool is_test_case_finished_;
+
+  /* total message latency */
   std::chrono::duration<double> elapsed_time_;
 };
 
@@ -79,15 +102,20 @@ class ScenarioBasicSubPubFixture : public benchmark::Fixture
 public:
   ScenarioBasicSubPubFixture();
 
+  /** \brief This method runs once each benchmark starts
+   *  \param [in] state
+   */
   void SetUp(::benchmark::State& /*state*/);
 
+  /** \brief This method runs as soon as each benchmark finishes
+   *  \param [in] state
+   */
   void TearDown(::benchmark::State& /*state*/);
 
 protected:
   rclcpp::Node::SharedPtr node_;
   std::shared_ptr<rclcpp::executors::SingleThreadedExecutor> executor_;
   std::thread node_thread_;
-  int max_receiving_topic_number_;
 };
 
 }  // namespace middleware_benchmark

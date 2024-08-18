@@ -47,10 +47,10 @@ namespace middleware_benchmark
 ScenarioBasicSubPub::ScenarioBasicSubPub(rclcpp::Node::SharedPtr node) : node_(node)
 {
   is_test_case_finished_ = false;
-  received_topic_number_ = 0;
+  received_message_number_ = 0;
   node_->get_parameter("benchmarked_topic_name", benchmarked_topic_name_);
   node_->get_parameter("benchmarked_topic_hz", benchmarked_topic_hz_);
-  node_->get_parameter("max_received_topic_number", max_received_topic_number_);
+  node_->get_parameter("max_received_message_number", max_received_message_number_);
 }
 
 void ScenarioBasicSubPub::runTestCase(benchmark::State& benchmark_state)
@@ -66,7 +66,7 @@ void ScenarioBasicSubPub::runTestCase(benchmark::State& benchmark_state)
   RCLCPP_INFO(node_->get_logger(),
               "Successfully subscribed to topic %s with hz %d! When received msg number is bigger than %ld, benchmark "
               "will be finished!",
-              benchmarked_topic_name_.c_str(), benchmarked_topic_hz_, max_received_topic_number_);
+              benchmarked_topic_name_.c_str(), benchmarked_topic_hz_, max_received_message_number_);
 
   std::unique_lock lk(is_test_case_finished_mutex_);
   test_case_cv_.wait(lk, [this]() { return is_test_case_finished_; });
@@ -78,9 +78,9 @@ void ScenarioBasicSubPub::runTestCase(benchmark::State& benchmark_state)
 void ScenarioBasicSubPub::subCallback(geometry_msgs::msg::PoseArray::SharedPtr pose_array_msg)
 {
   std::unique_lock lk(is_test_case_finished_mutex_);
-  received_topic_number_++;
+  received_message_number_++;
 
-  if (received_topic_number_ > max_received_topic_number_)
+  if (received_message_number_ > max_received_message_number_)
   {
     is_test_case_finished_ = true;
     lk.unlock();
@@ -103,8 +103,6 @@ void ScenarioBasicSubPubFixture::SetUp(benchmark::State& /*state*/)
   {
     node_ = std::make_shared<rclcpp::Node>("test_scenario_basic_sub_pub",
                                            rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true));
-
-    node_->get_parameter("max_receiving_topic_number", max_receiving_topic_number_);
 
     executor_ = std::make_shared<rclcpp::executors::SingleThreadedExecutor>();
     executor_->add_node(node_);
