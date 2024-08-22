@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: run benchmarks for rmw_fastrtps
         run: |
-          apt-get install -y cpufrequtils
+          apt-get install -y linux-tools-common
           lscpu
           cpupower frequency-set --governor performance
           cd /root/ws_moveit
