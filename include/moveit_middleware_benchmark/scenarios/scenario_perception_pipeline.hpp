@@ -79,23 +79,16 @@ public:
   ScenarioPerceptionPipeline(std::shared_ptr<MoveGroupInterface> move_group_interface_ptr);
 
   /** \brief Given a \e pose_list, sends poses in pose_list to plan,
-   *  if the pipeline in \e sendTargetPose returns true,
-   *  then success_number is increased.
-   *  If the pipeline in \e sendTargetPose returns false,
-   *  failure_number is increased.
    *  \param [in] test_case The pose list to benchmark
-   *  \return success_number and failure_number in tuple respectively
    */
-  std::tuple<int, int> runTestCase(const nav_msgs::msg::Path& pose_list);
+  void runTestCase(const nav_msgs::msg::Path& test_case);
 
   /** \brief Given a \e target_pose, sends this pose in order to plan via move_group_interface,
-   *  if the planning is successful,
-   *  planning message is sent to execute trajectory. Then it is returned true.
-   *  If the planning is failed, the execution is ignored and then it is returned false
+   *  if the planning is successful, planning message is sent to execute trajectory.
+   *  If the planning is failed, the execution is ignored
    *  \param [in] target_pose The pose to plan
-   *  \return if the planning successful, returns true, or false
    */
-  bool sendTargetPose(const geometry_msgs::msg::Pose& target_pose);
+  void sendTargetPose(const geometry_msgs::msg::Pose& target_pose);
 
 private:
   /** move_group_interface_ptr to communicate with move_group_server */
