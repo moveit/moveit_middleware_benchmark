@@ -14,14 +14,12 @@ jobs:
     steps:
       - name: run benchmarks for rmw_fastrtps
         run: |
-          apt-get install -y linux-tools-common
           lscpu
-          cpupower frequency-set --governor performance
           cd /root/ws_moveit
           . /opt/ros/rolling/setup.sh
           . install/setup.sh
-          sh src/moveit_middleware_benchmark_experimental/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark_experimental/middleware_configurations/rmw_fastrtps/config_rmw_fastrtps.sh -d /benchmark_results -m rmw_fastrtps_cpp
-          sh src/moveit_middleware_benchmark_experimental/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark_experimental/middleware_configurations/rmw_cyclonedds/config_rmw_cyclonedds.sh -d /benchmark_results -m rmw_cyclonedds_cpp
+          taskset -c 0 sh src/moveit_middleware_benchmark_experimental/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark_experimental/middleware_configurations/rmw_fastrtps/config_rmw_fastrtps.sh -d /benchmark_results -m rmw_fastrtps_cpp
+          taskset -c 0 sh src/moveit_middleware_benchmark_experimental/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark_experimental/middleware_configurations/rmw_cyclonedds/config_rmw_cyclonedds.sh -d /benchmark_results -m rmw_cyclonedds_cpp
       - name: clone repo
         uses: actions/checkout@v3
       - name: add to safe directory
