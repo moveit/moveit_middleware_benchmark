@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1724348936302,
+  "lastUpdate": 1724348937193,
   "repoUrl": "https://github.com/CihatAltiparmak/moveit_middleware_benchmark",
   "entries": {
     "Perception Pipeline Benchmark": [
@@ -254,6 +254,90 @@ window.BENCHMARK_DATA = {
             "value": 0.042505243451275446,
             "unit": "ns/iter",
             "extra": "iterations: 6\ncpu: 0.025897359622714028 ns\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "cihataltiparmak1@gmail.com",
+            "name": "CihatAltiparmak",
+            "username": "CihatAltiparmak"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2d4a2469515123655e673fda9a1c85e3eb7e88bb",
+          "message": "Removed unnecessary scores from perception pipeline benchmark (#28)",
+          "timestamp": "2024-08-22T11:07:32+03:00",
+          "tree_id": "aabadeb058a009dc9d25fb053091c443b61207ef",
+          "url": "https://github.com/CihatAltiparmak/moveit_middleware_benchmark/commit/2d4a2469515123655e673fda9a1c85e3eb7e88bb"
+        },
+        "date": 1724348937010,
+        "tool": "googlecpp",
+        "benches": [
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2210531895.000031,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 983369270 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2406812196.0001464,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1071028222.9999999 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2207379061.9997454,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 984745687.9999999 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2404911230.0001526,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1041945021.0000001 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2308355787.9997444,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 988585780.0000002 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2210662902.9999566,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1000864594.9999995 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_mean",
+            "value": 2291442178.9999623,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 1011756429.4999999 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_median",
+            "value": 2259509345.4998507,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 994725187.4999999 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_stddev",
+            "value": 96550411.34530257,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 36374217.790478714 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_cv",
+            "value": 0.042135216079263835,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 0.035951555858611636 ns\nthreads: 1"
           }
         ]
       }
