@@ -49,23 +49,15 @@ ScenarioPerceptionPipeline::ScenarioPerceptionPipeline(std::shared_ptr<MoveGroup
 {
 }
 
-std::tuple<int, int> ScenarioPerceptionPipeline::runTestCase(const nav_msgs::msg::Path& test_case)
+void ScenarioPerceptionPipeline::runTestCase(const nav_msgs::msg::Path& test_case)
 {
-  int success_number = 0;
-  int failure_number = 0;
   for (auto& pose_stamped : test_case.poses)
   {
-    bool is_successful = sendTargetPose(pose_stamped.pose);
-    if (is_successful)
-      success_number++;
-    else
-      failure_number++;
+    sendTargetPose(pose_stamped.pose);
   }
-
-  return { success_number, failure_number };
 }
 
-bool ScenarioPerceptionPipeline::sendTargetPose(const geometry_msgs::msg::Pose& target_pose)
+void ScenarioPerceptionPipeline::sendTargetPose(const geometry_msgs::msg::Pose& target_pose)
 {
   move_group_interface_ptr_->setPoseTarget(target_pose);
 
@@ -73,11 +65,6 @@ bool ScenarioPerceptionPipeline::sendTargetPose(const geometry_msgs::msg::Pose& 
   if (move_group_interface_ptr_->plan(plan_msg) == moveit::core::MoveItErrorCode::SUCCESS)
   {
     move_group_interface_ptr_->execute(plan_msg);
-    return true;
-  }
-  else
-  {
-    return false;
   }
 }
 
@@ -151,9 +138,7 @@ BENCHMARK_DEFINE_F(ScenarioPerceptionPipelineFixture, test_scenario_perception_p
   for (auto _ : st)
   {
     auto sc = ScenarioPerceptionPipeline(move_group_interface_ptr_);
-    auto [success_number, failure_number] = sc.runTestCase(selected_test_case);
-    st.counters["success_number"] = success_number;
-    st.counters["failure_number"] = failure_number;
+    sc.runTestCase(selected_test_case);
   }
 }
 
