@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1724395480441,
+  "lastUpdate": 1724395481957,
   "repoUrl": "https://github.com/CihatAltiparmak/moveit_middleware_benchmark",
   "entries": {
     "Perception Pipeline Benchmark": [
@@ -590,6 +590,90 @@ window.BENCHMARK_DATA = {
             "value": 0.04448117296455057,
             "unit": "ns/iter",
             "extra": "iterations: 6\ncpu: 0.04583167886769403 ns\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "cihataltiparmak1@gmail.com",
+            "name": "CihatAltiparmak",
+            "username": "CihatAltiparmak"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2a300c71bb75dc8665f3c6552d582debb1763a18",
+          "message": "Add taskset for CPU to set task affinity to fixed CPU",
+          "timestamp": "2024-08-23T08:58:33+03:00",
+          "tree_id": "76ed881ff9b564a9114db2be6ca6d093ba6d425d",
+          "url": "https://github.com/CihatAltiparmak/moveit_middleware_benchmark/commit/2a300c71bb75dc8665f3c6552d582debb1763a18"
+        },
+        "date": 1724395481387,
+        "tool": "googlecpp",
+        "benches": [
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2897734812.9999995,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 666947701.0000001 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2937097268.999992,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 664657673 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2857015308.9999905,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 659942255.9999999 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2853820360.0000143,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 656651342.0000008 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2883007445.999965,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 665169709.9999998 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2884070826.000027,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 664771123.0000004 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_mean",
+            "value": 2885457670.499998,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 663023300.8333335 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_median",
+            "value": 2883539135.999996,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 664714398.0000002 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_stddev",
+            "value": 30447300.840434566,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 3894322.5424590786 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_cv",
+            "value": 0.010551983192031577,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 0.005873583232390815 ns\nthreads: 1"
           }
         ]
       }
