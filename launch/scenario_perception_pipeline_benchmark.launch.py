@@ -58,6 +58,7 @@ def launch_setup(context, *args, **kwargs):
     move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
+        prefix=["taskset -c 0"],
         output="screen",
         parameters=[moveit_config.to_dict()],
         arguments=["--ros-args", "--log-level", "info"],
@@ -67,6 +68,7 @@ def launch_setup(context, *args, **kwargs):
     static_tf_node = Node(
         package="tf2_ros",
         executable="static_transform_publisher",
+        prefix=["taskset -c 0"],
         name="static_transform_publisher",
         output="log",
         arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "panda_link0"],
@@ -76,6 +78,7 @@ def launch_setup(context, *args, **kwargs):
     robot_state_publisher = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
+        prefix=["taskset -c 0"],
         name="robot_state_publisher",
         output="both",
         parameters=[moveit_config.robot_description],
@@ -91,6 +94,7 @@ def launch_setup(context, *args, **kwargs):
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[ros2_controllers_path],
+        prefix=["taskset -c 0"],
         remappings=[
             ("/controller_manager/robot_description", "/robot_description"),
         ],
@@ -100,6 +104,7 @@ def launch_setup(context, *args, **kwargs):
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
+        prefix=["taskset -c 0"],
         arguments=[
             "joint_state_broadcaster",
             "--controller-manager",
@@ -110,12 +115,14 @@ def launch_setup(context, *args, **kwargs):
     panda_arm_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
+        prefix=["taskset -c 0"],
         arguments=["panda_arm_controller", "-c", "/controller_manager"],
     )
 
     panda_hand_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
+        prefix=["taskset -c 0"],
         arguments=["panda_hand_controller", "-c", "/controller_manager"],
     )
 
@@ -125,6 +132,7 @@ def launch_setup(context, *args, **kwargs):
         executable="scenario_perception_pipeline_benchmark_main",
         output="both",
         arguments=benchmark_command_args,
+        prefix=["taskset -c 0"],
         parameters=[
             moveit_config.robot_description,
             moveit_config.robot_description_semantic,
