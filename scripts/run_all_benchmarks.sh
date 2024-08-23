@@ -42,4 +42,4 @@ ros2 launch moveit_middleware_benchmark scenario_basic_service_client_benchmark.
 
 mkdir ${benchmark_results_directory}/scenario_perception_pipeline -p
 ros2 daemon stop
-ros2 launch moveit_middleware_benchmark scenario_perception_pipeline_benchmark.launch.py benchmark_command_args:="--benchmark_out=${benchmark_results_directory}/scenario_perception_pipeline/${middleware_name}.json --benchmark_out_format=json" selected_test_case_index:=1
+ros2 launch moveit_middleware_benchmark scenario_perception_pipeline_benchmark.launch.py benchmark_command_args:="--benchmark_out=${benchmark_results_directory}/scenario_perception_pipeline/${middleware_name}.json --benchmark_out_format=json --benchmark_repetitions=1 --benchmark_min_time=20x" selected_test_case_index:=0
