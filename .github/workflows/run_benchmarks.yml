@@ -15,6 +15,7 @@ jobs:
       - name: run benchmarks for rmw_fastrtps
         run: |
           lscpu
+          echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost
           cd /root/ws_moveit
           . /opt/ros/rolling/setup.sh
           . install/setup.sh
