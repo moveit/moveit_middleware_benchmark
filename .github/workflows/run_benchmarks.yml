@@ -14,18 +14,13 @@ jobs:
     container:
       image: ghcr.io/cihataltiparmak/moveit_middleware_benchmark:latest
     steps:
-      - name: run benchmarks for rmw_fastrtps
+      - name: run all benchmarks
         run: |
           cd ${ROS_UNDERLAY}/..
           . /opt/ros/rolling/setup.sh
           . install/setup.sh
-          sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_fastrtps/config.sh -d /benchmark_results
-      - name: run benchmarks for rmw_cyclonedds
-        run: |
-          cd ${ROS_UNDERLAY}/..
-          . /opt/ros/rolling/setup.sh
-          . install/setup.sh
-          sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_cyclonedds/config.sh -d /benchmark_results
+          taskset -c 0 sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_fastrtps/config.sh -d /benchmark_results
+          taskset -c 0 sh src/moveit_middleware_benchmark/scripts/run_all_benchmarks.sh -i ./src/moveit_middleware_benchmark/middleware_configurations/rmw_cyclonedds/config.sh -d /benchmark_results
       - name: clone repo
         uses: actions/checkout@v3
       - name: add to safe directory
