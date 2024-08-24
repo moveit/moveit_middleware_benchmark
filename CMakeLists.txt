@@ -63,7 +63,7 @@ target_include_directories(
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
 target_link_libraries(scenario_basic_service_client_benchmark_main
-                      PUBLIC benchmark::benchmark ${YAML_CPP_LIBRARIES})
+                      PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
 
 add_executable(
   scenario_moveit_task_constructor_benchmark_main
@@ -75,7 +75,10 @@ ament_target_dependencies(
   scenario_moveit_task_constructor_benchmark_main
   PUBLIC
   moveit_ros_planning_interface
-  rclcpp
+  rclcpp  TARGETS scenario_perception_pipeline_benchmark_main
+          scenario_basic_service_client_benchmark_main
+          scenario_moveit_task_constructor_benchmark_main
+  DESTINATION lib/moveit_middleware_benchmark)
   benchmark
   std_msgs
   example_interfaces
@@ -94,9 +97,41 @@ target_link_libraries(
   scenario_moveit_task_constructor_benchmark_main
   PUBLIC benchmark::benchmark ${YAML_CPP_LIBRARIES} pick_place_demo_parameters)
 
+add_executable(
+  scenario_basic_subscription_benchmark_main
+  src/scenario_basic_subscription_benchmark_main.cpp
+  src/scenarios/basic_topic_sub_pub/scenario_basic_subscription.cpp)
+
+ament_target_dependencies(
+  scenario_basic_subscription_benchmark_main PUBLIC
+  moveit_ros_planning_interface rclcpp benchmark std_msgs)
+
+target_include_directories(
+  scenario_basic_subscription_benchmark_main
+  PUBLIC $<INSTALL_INTERFACE:include>
+         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+
+target_link_libraries(scenario_basic_subscription_benchmark_main
+                      PUBLIC benchmark::benchmark ${YAML_CPP_LIBRARIES})
+
+add_executable(scenario_basic_subscription_basic_topic_publisher
+               src/scenarios/basic_topic_sub_pub/basic_topic_publisher.cpp)
+
+ament_target_dependencies(scenario_basic_subscription_basic_topic_publisher
+                          PUBLIC rclcpp geometry_msgs)
+
+target_include_directories(
+  scenario_basic_subscription_basic_topic_publisher
+  PUBLIC $<INSTALL_INTERFACE:include>
+         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+
+install(TARGETS scenario_basic_subscription_basic_topic_publisher
+        DESTINATION lib/moveit_middleware_benchmark)
+
 install(
   TARGETS scenario_perception_pipeline_benchmark_main
           scenario_basic_service_client_benchmark_main
+          scenario_basic_subscription_benchmark_main
           scenario_moveit_task_constructor_benchmark_main
   DESTINATION lib/moveit_middleware_benchmark)
 
