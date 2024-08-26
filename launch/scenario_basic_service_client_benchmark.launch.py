@@ -25,6 +25,7 @@ def launch_setup(context, *args, **kwargs):
         name="add_two_ints_server",
         package="demo_nodes_cpp",
         executable="add_two_ints_server",
+        output="log",
     )
 
     benchmark_main_node = Node(
@@ -33,6 +34,7 @@ def launch_setup(context, *args, **kwargs):
         executable="scenario_basic_service_client_benchmark_main",
         output="both",
         arguments=benchmark_command_args,
+        prefix=["taskset -c 0"],
         parameters=[
             {"sending_request_number": sending_request_number},
         ],

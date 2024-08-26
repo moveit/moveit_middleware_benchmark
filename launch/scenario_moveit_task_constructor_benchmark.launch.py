@@ -118,6 +118,7 @@ def launch_setup(context, *args, **kwargs):
         executable="scenario_moveit_task_constructor_benchmark_main",
         output="both",
         arguments=benchmark_command_args,
+        prefix=["taskset -c 0"],
         parameters=[
             os.path.join(
                 get_package_share_directory("moveit_middleware_benchmark"),

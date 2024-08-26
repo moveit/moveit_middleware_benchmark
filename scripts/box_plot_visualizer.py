@@ -10,9 +10,10 @@ middleware_colors = {
     "rmw_zenoh_cpp": "orange",
     "rmw_cyclonedds_cpp": "peachpuff",
     "rmw_fastrtps_cpp": "tomato",
+    "rmw_zenoh_cpp(udp)" : "yellow",
 }
 
-middleware_list = ["rmw_zenoh_cpp", "rmw_cyclonedds_cpp", "rmw_fastrtps_cpp"]
+middleware_list = ["rmw_zenoh_cpp", "rmw_cyclonedds_cpp", "rmw_fastrtps_cpp", "rmw_zenoh_cpp(udp)"]
 
 
 def read_benchmark_json(file_name):

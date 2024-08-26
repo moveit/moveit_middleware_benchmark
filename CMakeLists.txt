@@ -75,10 +75,7 @@ ament_target_dependencies(
   scenario_moveit_task_constructor_benchmark_main
   PUBLIC
   moveit_ros_planning_interface
-  rclcpp  TARGETS scenario_perception_pipeline_benchmark_main
-          scenario_basic_service_client_benchmark_main
-          scenario_moveit_task_constructor_benchmark_main
-  DESTINATION lib/moveit_middleware_benchmark)
+  rclcpp
   benchmark
   std_msgs
   example_interfaces

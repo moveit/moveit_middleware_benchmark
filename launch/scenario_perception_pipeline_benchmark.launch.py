@@ -125,6 +125,7 @@ def launch_setup(context, *args, **kwargs):
         executable="scenario_perception_pipeline_benchmark_main",
         output="both",
         arguments=benchmark_command_args,
+        prefix=["taskset -c 0"],
         parameters=[
             moveit_config.robot_description,
             moveit_config.robot_description_semantic,

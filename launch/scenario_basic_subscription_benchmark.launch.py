@@ -51,6 +51,7 @@ def launch_setup(context, *args, **kwargs):
         executable="scenario_basic_subscription_benchmark_main",
         output="both",
         arguments=benchmark_command_args,
+        prefix=["taskset -c 0"],
         parameters=[
             {"max_received_message_number": max_received_message_number},
             {"benchmarked_topic_name": benchmarked_topic_name},
