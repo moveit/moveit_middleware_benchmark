@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1728316704410,
+  "lastUpdate": 1728316706090,
   "repoUrl": "https://github.com/moveit/moveit_middleware_benchmark",
   "entries": {
     "Perception Pipeline Benchmark": [
@@ -1422,6 +1422,90 @@ window.BENCHMARK_DATA = {
             "value": 0.015327752220401612,
             "unit": "ns/iter",
             "extra": "iterations: 6\ncpu: 0.007581099363942188 ns\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "cihataltiparmak1@gmail.com",
+            "name": "CihatAltiparmak",
+            "username": "CihatAltiparmak"
+          },
+          "committer": {
+            "email": "cihataltiparmak1@gmail.com",
+            "name": "CihatAltiparmak",
+            "username": "CihatAltiparmak"
+          },
+          "distinct": true,
+          "id": "d1c49a00f403ce033d470121a82c3f851232946a",
+          "message": "Added zenoh router to launch file",
+          "timestamp": "2024-10-07T18:17:39+03:00",
+          "tree_id": "7348d1d7bd93e47acb438756458411290dc13346",
+          "url": "https://github.com/moveit/moveit_middleware_benchmark/commit/d1c49a00f403ce033d470121a82c3f851232946a"
+        },
+        "date": 1728316705453,
+        "tool": "googlecpp",
+        "benches": [
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2887683945.9999814,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1103467454 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2878637542.000007,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1116939004 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2957453833.0000167,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1108362508 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 3065566912.9999976,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1131132183.0000005 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 3003789879.00001,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1115977538.000001 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2960192046.000003,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1115388745.999999 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_mean",
+            "value": 2958887359.833336,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 1115211238.8333333 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_median",
+            "value": 2958822939.5000095,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 1115683142 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_stddev",
+            "value": 70583964.04330774,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 9401084.565903215 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_cv",
+            "value": 0.02385490066349923,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 0.00842986892397001 ns\nthreads: 1"
           }
         ]
       }
