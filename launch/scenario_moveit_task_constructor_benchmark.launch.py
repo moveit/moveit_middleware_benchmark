@@ -1,6 +1,11 @@
 import os
 from launch import LaunchDescription
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import (
+    LaunchConfiguration,
+    PathJoinSubstitution,
+    EnvironmentVariable,
+    EqualsSubstitution,
+)
 from launch.conditions import IfCondition
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
@@ -112,6 +117,19 @@ def launch_setup(context, *args, **kwargs):
         arguments=["panda_hand_controller", "-c", "/controller_manager"],
     )
 
+    zenoh_router = Node(
+        name="zenoh_router",
+        package="rmw_zenoh_cpp",
+        executable="rmw_zenohd",
+        output="both",
+        condition=IfCondition(
+            EqualsSubstitution(
+                EnvironmentVariable("RMW_IMPLEMENTATION", default_value=""),
+                "rmw_zenoh_cpp",
+            ),
+        ),
+    )
+
     benchmark_main_node = Node(
         name="benchmark_main",
         package="moveit_middleware_benchmark",
@@ -135,6 +153,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     return [
+        zenoh_router,
         move_group_node,
         static_tf_node,
         robot_state_publisher,
