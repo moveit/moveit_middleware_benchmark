@@ -1,6 +1,6 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1724663755108,
-  "repoUrl": "https://github.com/CihatAltiparmak/moveit_middleware_benchmark",
+  "lastUpdate": 1728314017623,
+  "repoUrl": "https://github.com/moveit/moveit_middleware_benchmark",
   "entries": {
     "Perception Pipeline Benchmark": [
       {
@@ -504,6 +504,90 @@ window.BENCHMARK_DATA = {
             "value": 0.16987746165036408,
             "unit": "ns/iter",
             "extra": "iterations: 6\ncpu: 0.17492740060030046 ns\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "cihataltiparmak1@gmail.com",
+            "name": "CihatAltiparmak",
+            "username": "CihatAltiparmak"
+          },
+          "committer": {
+            "email": "cihataltiparmak1@gmail.com",
+            "name": "CihatAltiparmak",
+            "username": "CihatAltiparmak"
+          },
+          "distinct": true,
+          "id": "0c5546222346c614de704f4005d3551c5f2fa125",
+          "message": "Refactored CMakeLists.txt for easier integration of next benchmarks",
+          "timestamp": "2024-10-07T16:34:04+03:00",
+          "tree_id": "d6190ed7d225ea1b1e8be9e7d29aa04b51aab266",
+          "url": "https://github.com/moveit/moveit_middleware_benchmark/commit/0c5546222346c614de704f4005d3551c5f2fa125"
+        },
+        "date": 1728314017368,
+        "tool": "googlecpp",
+        "benches": [
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 203413812022,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1388177837 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 191634410571.99997,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1310095457 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 175383712416.99997,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1205954006.0000002 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 175385690860.00006,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1196588805.0000002 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 190774567990.00015,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1296889030 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 205962123005.99997,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1404488375.9999998 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_mean",
+            "value": 190425719477.83337,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 1300365585.1666665 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_median",
+            "value": 191204489281.0001,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 1303492243.5 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_stddev",
+            "value": 13146234816.211054,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 87569938.1833616 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_cv",
+            "value": 0.06903602545002516,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 0.06734255288072534 ns\nthreads: 1"
           }
         ]
       }
