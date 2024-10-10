@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1728556015803,
+  "lastUpdate": 1728569493169,
   "repoUrl": "https://github.com/moveit/moveit_middleware_benchmark",
   "entries": {
     "Perception Pipeline Benchmark": [
@@ -1244,6 +1244,90 @@ window.BENCHMARK_DATA = {
             "value": 0.17925367741420722,
             "unit": "ns/iter",
             "extra": "iterations: 6\ncpu: 0.1790769542505746 ns\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "cihataltiparmak1@gmail.com",
+            "name": "Cihat Kurtuluş Altıparmak",
+            "username": "CihatAltiparmak"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "16971be63bce55aecafbe93731aeb60e38307a97",
+          "message": "Refactored CMakeLists.txt for easier integration of next benchmarks (#41)\n\n* Refactored CMakeLists.txt for easier integration of next benchmarks\r\n\r\n* Added moveit_common into CMakeLists.txt",
+          "timestamp": "2024-10-10T16:24:14+03:00",
+          "tree_id": "25d1e21e2df10fa92b9ea4a5368fcb3d6150a16d",
+          "url": "https://github.com/moveit/moveit_middleware_benchmark/commit/16971be63bce55aecafbe93731aeb60e38307a97"
+        },
+        "date": 1728569492669,
+        "tool": "googlecpp",
+        "benches": [
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 309156531723.00006,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 2185629840.0000005 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 261606177560.99997,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1853720554.9999998 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 183363003980.00003,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1308465966 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 223823594907.00003,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1594100465.9999995 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 175431218927.9999,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1239077217.9999993 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 175413232362.00015,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1242975177 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_mean",
+            "value": 221465626576.83337,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 1570661536.9999998 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_median",
+            "value": 203593299443.50003,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 1451283215.9999998 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_stddev",
+            "value": 54769185209.50742,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 385987262.3150291 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_cv",
+            "value": 0.24730332221784437,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 0.24574821068851904 ns\nthreads: 1"
           }
         ]
       }
