@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1728631480089,
+  "lastUpdate": 1728631481656,
   "repoUrl": "https://github.com/moveit/moveit_middleware_benchmark",
   "entries": {
     "Perception Pipeline Benchmark": [
@@ -2738,6 +2738,86 @@ window.BENCHMARK_DATA = {
             "value": 0.0354124799162421,
             "unit": "ns/iter",
             "extra": "iterations: 6\ncpu: 0.032665967401130216 ns\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "moveit",
+            "username": "moveit"
+          },
+          "committer": {
+            "name": "moveit",
+            "username": "moveit"
+          },
+          "id": "d1cce38facdfd25db90b3b4ca0c6751aabd60de7",
+          "message": "Implemented basic topic subscription-publishing scenario",
+          "timestamp": "2024-10-10T13:24:20Z",
+          "url": "https://github.com/moveit/moveit_middleware_benchmark/pull/30/commits/d1cce38facdfd25db90b3b4ca0c6751aabd60de7"
+        },
+        "date": 1728631481075,
+        "tool": "googlecpp",
+        "benches": [
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 3012250521.9999313,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1204046669 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 3005196490.999879,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1267877185.0000002 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2803541083.000027,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1223316208.9999995 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 3006629354.000097,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1300209065.0000002 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2904650994.0001216,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1247568247.0000012 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client",
+            "value": 2906687484.000031,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1232480647.000001 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_mean",
+            "value": 2939825988.000015,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 1245916337.0000002 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_median",
+            "value": 2955941987.4999547,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 1240024447.000001 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_stddev",
+            "value": 83534808.8854077,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 34284283.906872325 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioBasicServiceClientFixture/test_scenario_basic_service_client_cv",
+            "value": 0.028414882114242777,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 0.027517324308808964 ns\nthreads: 1"
           }
         ]
       }
