@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1728569494431,
+  "lastUpdate": 1728631476976,
   "repoUrl": "https://github.com/moveit/moveit_middleware_benchmark",
   "entries": {
     "Perception Pipeline Benchmark": [
@@ -1328,6 +1328,86 @@ window.BENCHMARK_DATA = {
             "value": 0.24730332221784437,
             "unit": "ns/iter",
             "extra": "iterations: 6\ncpu: 0.24574821068851904 ns\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "moveit",
+            "username": "moveit"
+          },
+          "committer": {
+            "name": "moveit",
+            "username": "moveit"
+          },
+          "id": "d1cce38facdfd25db90b3b4ca0c6751aabd60de7",
+          "message": "Implemented basic topic subscription-publishing scenario",
+          "timestamp": "2024-10-10T13:24:20Z",
+          "url": "https://github.com/moveit/moveit_middleware_benchmark/pull/30/commits/d1cce38facdfd25db90b3b4ca0c6751aabd60de7"
+        },
+        "date": 1728631476088,
+        "tool": "googlecpp",
+        "benches": [
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 178597679399.99997,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1237016473.0000002 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 175415518804.99997,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1222030488 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 217946056242.99994,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1513336446.9999995 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 281931865727.00006,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1941080577.0000002 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 206623021779.00006,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1436565810.0000002 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline",
+            "value": 188226082560.99988,
+            "unit": "ns/iter",
+            "extra": "iterations: 1\ncpu: 1321099315.0000005 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_mean",
+            "value": 208123370752.49997,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 1445188185 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_median",
+            "value": 197424552169.99997,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 1378832562.5000005 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_stddev",
+            "value": 39708694851.19524,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 268015172.1350752 ns\nthreads: 1"
+          },
+          {
+            "name": "ScenarioPerceptionPipelineFixture/test_scenario_perception_pipeline_cv",
+            "value": 0.19079402139040294,
+            "unit": "ns/iter",
+            "extra": "iterations: 6\ncpu: 0.18545347582887634 ns\nthreads: 1"
           }
         ]
       }
