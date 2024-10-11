@@ -55,9 +55,8 @@ add_executable(scenario_basic_service_client_benchmark_main
 target_link_libraries(scenario_basic_service_client_benchmark_main
                       PUBLIC moveit_middleware_benchmark_lib)
 
-add_executable(
-  scenario_basic_subscription_benchmark_main
-  src/scenario_basic_subscription_benchmark_main.cpp)
+add_executable(scenario_basic_subscription_benchmark_main
+               src/scenario_basic_subscription_benchmark_main.cpp)
 
 target_link_libraries(scenario_basic_subscription_benchmark_main
                       PUBLIC moveit_middleware_benchmark_lib)
