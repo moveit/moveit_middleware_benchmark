@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.8)
 project(moveit_middleware_benchmark)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
+# Common cmake code applied to all moveit packages
+find_package(moveit_common REQUIRED)
+moveit_package()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
@@ -17,51 +17,42 @@ find_package(yaml-cpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(example_interfaces REQUIRED)
 
-add_executable(
-  scenario_perception_pipeline_benchmark_main
-  src/scenario_perception_pipeline_benchmark_main.cpp
-  src/scenarios/scenario_perception_pipeline.cpp)
+add_library(
+  moveit_middleware_benchmark_lib SHARED
+  src/scenarios/scenario_perception_pipeline.cpp
+  src/scenarios/scenario_basic_service_client.cpp)
 
 ament_target_dependencies(
-  scenario_perception_pipeline_benchmark_main
+  moveit_middleware_benchmark_lib
   PUBLIC
   moveit_ros_planning_interface
   rclcpp
   benchmark
   dynmsg
   nav_msgs
+  std_msgs
   yaml-cpp
   example_interfaces)
 
 target_include_directories(
-  scenario_perception_pipeline_benchmark_main
+  moveit_middleware_benchmark_lib
   PUBLIC $<INSTALL_INTERFACE:include>
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
-target_link_libraries(scenario_perception_pipeline_benchmark_main
+target_link_libraries(moveit_middleware_benchmark_lib
                       PUBLIC benchmark::benchmark ${YAML_CPP_LIBRARIES})
 
-add_executable(
-  scenario_basic_service_client_benchmark_main
-  src/scenario_basic_service_client_benchmark_main.cpp
-  src/scenarios/scenario_basic_service_client.cpp)
+add_executable(scenario_perception_pipeline_benchmark_main
+               src/scenario_perception_pipeline_benchmark_main.cpp)
 
-ament_target_dependencies(
-  scenario_basic_service_client_benchmark_main
-  PUBLIC
-  moveit_ros_planning_interface
-  rclcpp
-  benchmark
-  std_msgs
-  example_interfaces)
+target_link_libraries(scenario_perception_pipeline_benchmark_main
+                      PUBLIC moveit_middleware_benchmark_lib)
 
-target_include_directories(
-  scenario_basic_service_client_benchmark_main
-  PUBLIC $<INSTALL_INTERFACE:include>
-         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+add_executable(scenario_basic_service_client_benchmark_main
+               src/scenario_basic_service_client_benchmark_main.cpp)
 
 target_link_libraries(scenario_basic_service_client_benchmark_main
-                      PUBLIC "benchmark::benchmark" ${YAML_CPP_LIBRARIES})
+                      PUBLIC moveit_middleware_benchmark_lib)
 
 install(TARGETS scenario_perception_pipeline_benchmark_main
                 scenario_basic_service_client_benchmark_main
