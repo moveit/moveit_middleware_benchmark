@@ -2,7 +2,7 @@
 
 Under Construction
 
-[![CI (Rolling)](https://github.com/CihatAltiparmak/moveit_middleware_benchmark/actions/workflows/industrial_ci.yml/badge.svg?branch=main)](https://github.com/CihatAltiparmak/moveit_middleware_benchmark/actions/workflows/industrial_ci.yml?query=branch%3Amain)
+[![CI (Rolling)](https://github.com/moveit/moveit_middleware_benchmark/actions/workflows/industrial_ci.yml/badge.svg?branch=main)](https://github.com/moveit/moveit_middleware_benchmark/actions/workflows/industrial_ci.yml?query=branch%3Amain)
 
 *Middleware Benchmark Tool For MoveIt2*
 

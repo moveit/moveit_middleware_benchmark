@@ -1,6 +1,11 @@
 name: Create Docker Image
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    - cron: '03 5 * * *'
 
 jobs:
   build_and_push_docker_image:
@@ -26,7 +31,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/CihatAltiparmak/moveit_middleware_benchmark
+          images: ghcr.io/moveit/moveit_middleware_benchmark
           flavor: latest=true
       - name: Build and push
         uses: docker/build-push-action@v6
