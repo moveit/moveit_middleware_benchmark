@@ -1,6 +1,10 @@
 name: Run MoveIt Middleware Benchmarks
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   run_all_benchmarks:
@@ -12,7 +16,7 @@ jobs:
       contents: write
       deployments: write
     container:
-      image: ghcr.io/cihataltiparmak/moveit_middleware_benchmark:latest
+      image: ghcr.io/moveit/moveit_middleware_benchmark:latest
     steps:
       - name: run benchmarks for rmw_fastrtps
         run: |
@@ -68,7 +72,7 @@ jobs:
           auto-push: true
           gh-pages-branch: "gh-pages"
           benchmark-data-dir-path: "rmw_cyclonedds"
-      - name: push simple service client benchmark results for rme_cyclonedds to github pages
+      - name: push simple service client benchmark results for rmw_cyclonedds to github pages
         uses: benchmark-action/github-action-benchmark@v1
         with:
           name: Basic Service Client Benchmark
