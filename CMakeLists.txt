@@ -20,7 +20,8 @@ find_package(example_interfaces REQUIRED)
 add_library(
   moveit_middleware_benchmark_lib SHARED
   src/scenarios/scenario_perception_pipeline.cpp
-  src/scenarios/scenario_basic_service_client.cpp)
+  src/scenarios/scenario_basic_service_client.cpp
+  src/scenarios/basic_topic_sub_pub/scenario_basic_subscription.cpp)
 
 ament_target_dependencies(
   moveit_middleware_benchmark_lib
@@ -54,9 +55,31 @@ add_executable(scenario_basic_service_client_benchmark_main
 target_link_libraries(scenario_basic_service_client_benchmark_main
                       PUBLIC moveit_middleware_benchmark_lib)
 
-install(TARGETS scenario_perception_pipeline_benchmark_main
-                scenario_basic_service_client_benchmark_main
+add_executable(scenario_basic_subscription_benchmark_main
+               src/scenario_basic_subscription_benchmark_main.cpp)
+
+target_link_libraries(scenario_basic_subscription_benchmark_main
+                      PUBLIC moveit_middleware_benchmark_lib)
+
+add_executable(scenario_basic_subscription_basic_topic_publisher
+               src/scenarios/basic_topic_sub_pub/basic_topic_publisher.cpp)
+
+ament_target_dependencies(scenario_basic_subscription_basic_topic_publisher
+                          PUBLIC rclcpp geometry_msgs)
+
+target_include_directories(
+  scenario_basic_subscription_basic_topic_publisher
+  PUBLIC $<INSTALL_INTERFACE:include>
+         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+
+install(TARGETS scenario_basic_subscription_basic_topic_publisher
         DESTINATION lib/moveit_middleware_benchmark)
+
+install(
+  TARGETS scenario_perception_pipeline_benchmark_main
+          scenario_basic_service_client_benchmark_main
+          scenario_basic_subscription_benchmark_main
+  DESTINATION lib/moveit_middleware_benchmark)
 
 install(DIRECTORY launch config DESTINATION share/moveit_middleware_benchmark)
 
