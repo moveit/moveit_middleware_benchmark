@@ -39,3 +39,15 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  delete-untagged-images:
+    name: Delete Untagged Images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/delete-package-versions@v5
+      with:
+        owner: 'moveit'
+        package-name: 'moveit_middleware_benchmark'
+        package-type: 'docker'
+        min-versions-to-keep: 5
+        delete-only-untagged-versions: 'true'
