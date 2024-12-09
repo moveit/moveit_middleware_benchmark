@@ -33,6 +33,7 @@ def launch_setup(context, *args, **kwargs):
         executable="scenario_basic_service_client_benchmark_main",
         output="both",
         arguments=benchmark_command_args,
+        # prefix=["gdb -ex run -ex bt --args"],
         parameters=[
             {"sending_request_number": sending_request_number},
         ],

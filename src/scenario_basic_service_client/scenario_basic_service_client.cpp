@@ -37,7 +37,7 @@
    against basic service client works
  */
 
-#include "moveit_middleware_benchmark/scenarios/scenario_basic_service_client.hpp"
+#include "moveit_middleware_benchmark/scenario_basic_service_client/scenario_basic_service_client.hpp"
 
 namespace moveit
 {
