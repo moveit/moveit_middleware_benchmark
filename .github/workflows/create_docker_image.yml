@@ -45,9 +45,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/delete-package-versions@v5
-      with:
-        owner: 'moveit'
-        package-name: 'moveit_middleware_benchmark'
-        package-type: 'docker'
-        min-versions-to-keep: 5
-        delete-only-untagged-versions: 'true'
+        with:
+          owner: 'moveit'
+          package-name: 'moveit_middleware_benchmark'
+          package-type: 'docker'
+          min-versions-to-keep: 5
+          delete-only-untagged-versions: 'true'
