@@ -43,11 +43,16 @@ jobs:
   delete-untagged-images:
     name: Delete Untagged Images
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
     steps:
       - uses: actions/delete-package-versions@v5
         with:
           owner: 'moveit'
           package-name: 'moveit_middleware_benchmark'
-          package-type: 'docker'
+          package-type: 'container'
           min-versions-to-keep: 5
           delete-only-untagged-versions: 'true'
