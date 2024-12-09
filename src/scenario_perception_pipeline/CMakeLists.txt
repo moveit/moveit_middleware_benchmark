@@ -1,6 +1,7 @@
-add_executable(scenario_perception_pipeline_benchmark_main
-               scenario_perception_pipeline_benchmark_main.cpp
-               scenario_perception_pipeline.cpp)
+add_executable(
+  scenario_perception_pipeline_benchmark_main
+  scenario_perception_pipeline_benchmark_main.cpp
+  scenario_perception_pipeline.cpp)
 
 ament_target_dependencies(
   scenario_perception_pipeline_benchmark_main
