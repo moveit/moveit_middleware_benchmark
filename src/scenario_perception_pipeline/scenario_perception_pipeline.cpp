@@ -37,7 +37,7 @@
    against perception pipeline
  */
 
-#include "moveit_middleware_benchmark/scenarios/scenario_perception_pipeline.hpp"
+#include "moveit_middleware_benchmark/scenario_perception_pipeline/scenario_perception_pipeline.hpp"
 
 namespace moveit
 {
