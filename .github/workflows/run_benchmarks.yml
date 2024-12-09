@@ -18,7 +18,7 @@ jobs:
     container:
       image: ghcr.io/moveit/moveit_middleware_benchmark:latest
       credentials:
-        username: ${{ github.repository_owner }}
+        username: CihatAltiparmak
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: run benchmarks for rmw_fastrtps
