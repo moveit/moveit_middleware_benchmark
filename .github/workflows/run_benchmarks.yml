@@ -15,8 +15,12 @@ jobs:
     permissions:
       contents: write
       deployments: write
+      packages: read
     container:
       image: ghcr.io/moveit/moveit_middleware_benchmark:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: run benchmarks for rmw_fastrtps
         run: |
