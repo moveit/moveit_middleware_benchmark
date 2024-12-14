@@ -34,10 +34,10 @@
 
 /* Author: Cihat Kurtuluş Altıparmak
    Description: Benchmarking module to compare the effects of middlewares
-   against perception pipeline
+   against basic service client works
  */
 
-#include "moveit_middleware_benchmark/scenarios/scenario_perception_pipeline.hpp"
+#include "moveit_middleware_benchmark/scenario_basic_service_client/scenario_basic_service_client.hpp"
 
 int main(int argc, char** argv)
 {
